@@ -23,7 +23,7 @@ public class CharacterManager : MonoBehaviour
         set { player = value; }
     }
 
-    private void Awake()// CharacterManager의 인스턴스를 초기화하는 메서드
+    private void Awake()// CharacterManager의 인스턴스를 초기화하는 메서드, 방어적 싱글턴 패턴을 사용하여 인스턴스를 관리합니다.
     {
         if (instance == null)
         {

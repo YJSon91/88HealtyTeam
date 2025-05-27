@@ -661,7 +661,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   curMovementInput: {x: 0, y: 0}
-  dashSpeed: 1.5
+  dashSpeed: 2
   jumpForce: 80
   isDashing: 0
   dashBlocked: 0

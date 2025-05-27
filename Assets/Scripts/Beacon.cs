@@ -18,7 +18,7 @@ public class Beacon : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -40,6 +40,16 @@ public class Beacon : MonoBehaviour
         }
     }
 
+    private void OnCollisionExit(Collision collision)
+    {
+        PickupableItem item = collision.gameObject.GetComponent<PickupableItem>();
+
+        if (item != null)
+        {
+            isActivated = false; // 비활성화 상태로 변경
+        }
+    }
+
     /// <summary>
     /// 아이템이 비콘에 배치되었을 때, 올바른 상호작용 아이템인지 색상을 통해 판별
     /// </summary>
@@ -52,6 +62,8 @@ public class Beacon : MonoBehaviour
         if (item.itemData.itemColor == beaconData.beaconColor)
         {
             result = true;
+
+            isActivated = true;
         }
 
         return result;

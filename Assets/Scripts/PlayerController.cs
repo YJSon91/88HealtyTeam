@@ -11,25 +11,28 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     public float moveSpeed;
     [SerializeField] private Vector2 curMovementInput;//현재 이동 입력값
-    [SerializeField] private float jumpForce = 80f;
+    [SerializeField] private float dashSpeed; // 대시 속도 배율
+    [SerializeField] private float jumpForce = 80f;// 점프 힘
+    private bool isDashing = false;// 대시 여부를 나타내는 변수
     public LayerMask groundLayerMask;
     private int _jumpStack;//점프 스택, _jumpStack으로 선언하여 재귀 호출 방지
+    [SerializeField] private int maxJumpStack;// 1일 경우 더블 점프 가능
     public int jumpStack
     {
         get => _jumpStack;
-        set => _jumpStack = Mathf.Clamp(value, 0, 1);
-    }//점프 스택을 0과 1 사이로 제한
+        set => _jumpStack = Mathf.Clamp(value, 0, maxJumpStack);
+    }//점프 스택을 0과 maxJumpStack 사이로 제한
 
     [Header("Look")]
     public Transform cameraContainer;
     public float minLookX;
     public float maxLookX;
-    [SerializeField] private float camCurXRotation;
+    private float camCurXRotation;
     public float camSensitivity;
-    [SerializeField] private Vector2 mouseDelta;
+    private Vector2 mouseDelta;
     public Camera cam; // 플레이어 카메라
 
-    // 1. Tab UI 오브젝트 선언 (인스펙터에서 할당)
+    // Tab UI 오브젝트 선언 (인스펙터에서 할당)
     [SerializeField] private GameObject tabMenuUI;
 
     private bool isPaused = false;
@@ -51,7 +54,7 @@ public class PlayerController : MonoBehaviour
         // 땅에 닿았으면 점프 스택 복구
         if (IsGrounded())
         {
-            jumpStack = 1;
+            jumpStack = maxJumpStack;
         }
     }
 
@@ -62,8 +65,9 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
+        float speed = isDashing ? moveSpeed * dashSpeed : moveSpeed;
         Vector3 dir = transform.forward * curMovementInput.y + transform.right * curMovementInput.x;
-        dir *= moveSpeed;
+        dir *= speed;
         dir.y = rb.velocity.y;
 
         rb.velocity = dir;
@@ -71,6 +75,7 @@ public class PlayerController : MonoBehaviour
 
     void CameraLook()
     {
+        if (isPaused) return; // 퍼즈 중 카메라 회전 무시
         camCurXRotation += mouseDelta.y * camSensitivity;
         camCurXRotation = Mathf.Clamp(camCurXRotation, minLookX, maxLookX);
         cameraContainer.localRotation = Quaternion.Euler(-camCurXRotation, 0, 0);
@@ -85,13 +90,21 @@ public class PlayerController : MonoBehaviour
         {
             curMovementInput = context.ReadValue<Vector2>();
         }
-        else if (context.phase == InputActionPhase.Performed)
-        {
-            curMovementInput = context.ReadValue<Vector2>();
-        }
         else if (context.phase == InputActionPhase.Canceled)
         {
             curMovementInput = Vector2.zero;
+        }
+    }
+
+    public void OnDash(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            isDashing = true;
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            isDashing = false;
         }
     }
 

@@ -57,10 +57,18 @@ public class PoisonTrap : Trap
     protected override void ApplyTrapDebuff(GameObject player)
     {
         base.ApplyTrapDebuff(player);
+
+        CharacterManager.Instance.Player.controller.moveSpeed -= trapData.trapDebuffRate;
+
+        Debug.Log("debuff player speed status: " + CharacterManager.Instance.Player.controller.moveSpeed);
     }
 
     protected override void RemoveTrapDebuff(GameObject player)
     {
         base.RemoveTrapDebuff(player);
+
+        CharacterManager.Instance.Player.controller.moveSpeed += trapData.trapDebuffRate;
+
+        Debug.Log("recover player speed status: " + CharacterManager.Instance.Player.controller.moveSpeed);
     }
 }

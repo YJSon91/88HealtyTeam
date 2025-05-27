@@ -15,4 +15,4 @@ MonoBehaviour:
   trapName: PoisonTrap
   description: "\uB9F9\uB3C5 \uD568\uC815"
   trapDamage: 0
-  trapAmount: 3
+  trapDebuffRate: 3

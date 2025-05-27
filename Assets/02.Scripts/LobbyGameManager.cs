@@ -1,21 +1,21 @@
-// LobbyGameManager.cs
+ï»¿// LobbyGameManager.cs
 using UnityEngine;
 
 public class LobbyGameManager : MonoBehaviour
 {
-    public bool isStage1Cleared = false; // ¿¹½Ã: ½ºÅ×ÀÌÁö 1 Å¬¸®¾î »óÅÂ
-    // (¼±ÅÃÀû) ½Ì±ÛÅæÀ¸·Î ¸¸µé¾î ´Ù¸¥ °÷¿¡¼­ ½±°Ô Á¢±ÙÇÏ°Ô ÇÒ ¼ö ÀÖ½À´Ï´Ù.
+    public bool isStage1Cleared = false; // ì˜ˆì‹œ: ìŠ¤í…Œì´ì§€ 1 í´ë¦¬ì–´ ìƒíƒœ
+    // (ì„ íƒì ) ì‹±ê¸€í†¤ìœ¼ë¡œ ë§Œë“¤ì–´ ë‹¤ë¥¸ ê³³ì—ì„œ ì‰½ê²Œ ì ‘ê·¼í•˜ê²Œ í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.
     // public static LobbyGameManager Instance;
     // void Awake() { if (Instance == null) Instance = this; else Destroy(gameObject); }
 
     public void UpdateStageStatus(string stageName, bool cleared)
     {
-        if (stageName == "Stage1") // MVP¿¡¼­´Â ½ºÅ×ÀÌÁö 1¸¸ °¡Á¤
+        if (stageName == "Stage1") // MVPì—ì„œëŠ” ìŠ¤í…Œì´ì§€ 1ë§Œ ê°€ì •
         {
             isStage1Cleared = cleared;
             Debug.Log("LobbyGameManager: Stage 1 clear status updated to " + cleared);
 
-            // TODO: ÀÌ »óÅÂ º¯°æ¿¡ µû¶ó ·Îºñ ¹öÆ°ÀÇ ½Ã°¢Àû ¾÷µ¥ÀÌÆ®¸¦ ¿äÃ»ÇÏ´Â ·ÎÁ÷ Ãß°¡ (3´Ü°è¿¡¼­)
+            // TODO: ì´ ìƒíƒœ ë³€ê²½ì— ë”°ë¼ ë¡œë¹„ ë²„íŠ¼ì˜ ì‹œê°ì  ì—…ë°ì´íŠ¸ë¥¼ ìš”ì²­í•˜ëŠ” ë¡œì§ ì¶”ê°€ (3ë‹¨ê³„ì—ì„œ)
         }
     }
 }

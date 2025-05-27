@@ -17,10 +17,11 @@ public class EnvironmentalHazard : MonoBehaviour
     private float oriSpeed;
     private float effectValue;
 
+    private Coroutine poisoning;
 
     private void Start()
     {
-        // 플레이어의 원래 속도를 할당
+        oriSpeed = CharacterManager.Instance.Player.controller.moveSpeed;
     }
 
 
@@ -28,11 +29,14 @@ public class EnvironmentalHazard : MonoBehaviour
     {
         if (type == HazardType.SLOWING_LIQUID)
         {
-            // 플레이어 속도 감소
+            effectValue = 2.0f;
+            player.controller.moveSpeed /= effectValue;
+            Debug.Log($"속도 감소: {player.controller.moveSpeed}");
         }
         else if (type == HazardType.POISON_GAS_AREA)
         {
-            // 플레이어 중독
+            effectValue = 1.0f;
+            poisoning = StartCoroutine(Poisoning((int)effectValue));
         }
     }
 
@@ -40,17 +44,29 @@ public class EnvironmentalHazard : MonoBehaviour
     {
         if (type == HazardType.SLOWING_LIQUID)
         {
-            // 플레이어 속도 복구
+            player.controller.moveSpeed = oriSpeed;
+            Debug.Log($"속도 정상화: {player.controller.moveSpeed}");
         }
         else if (type == HazardType.POISON_GAS_AREA)
         {
-            // 플레이어 중독해제
+            StopCoroutine(poisoning);
+            Debug.Log($"중독 종료, 현재체력{player.condition.health}");
+        }
+    }
+
+    public IEnumerator Poisoning(int damage)
+    {
+        while(true)
+        {
+            Debug.Log($"{damage}만큼의 독뎀!");
+            CharacterManager.Instance.Player.condition.TakePhysicalDamage(damage);
+            yield return new WaitForSeconds(2);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        var player = other.GetComponent<Player>(); // 추후 변경
+        var player = other.GetComponent<Player>(); 
         if (player != null)
         {
             ApplyEffect(player);
@@ -60,7 +76,7 @@ public class EnvironmentalHazard : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        var player = other.GetComponent<Player>(); // 추후 변경
+        var player = other.GetComponent<Player>(); 
         if (player != null)
         {
             RemoveEffect(player);

@@ -1,12 +1,11 @@
-﻿// LobbyGameManager.cs
-using UnityEngine;
+﻿using UnityEngine;
 
 public class LobbyGameManager : MonoBehaviour
 {
     public bool isStage1Cleared = false; // 예시: 스테이지 1 클리어 상태
-    // (선택적) 싱글톤으로 만들어 다른 곳에서 쉽게 접근하게 할 수 있습니다.
-    // public static LobbyGameManager Instance;
-    // void Awake() { if (Instance == null) Instance = this; else Destroy(gameObject); }
+                                         // (선택적) 싱글톤으로 만들어 다른 곳에서 쉽게 접근하게 할 수 있습니다.
+    public static LobbyGameManager Instance;
+    void Awake() { if (Instance == null) Instance = this; else Destroy(gameObject); }
 
     public void UpdateStageStatus(string stageName, bool cleared)
     {

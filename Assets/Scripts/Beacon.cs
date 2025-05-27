@@ -8,6 +8,7 @@ public class Beacon : MonoBehaviour
 
     private Renderer renderer;
     [SerializeField] private bool isActivated = false;
+    private IBeaconActivate beaconActivate;
 
     void Start()
     {
@@ -75,7 +76,14 @@ public class Beacon : MonoBehaviour
     /// memo : 연결된 기믹을 비콘에 연결시킬 필요가 있다. 현재는 연결되어 있지 않음
     private void ActivateGimmick()
     {
-        // 부모의 bool값을 변동시키거나 함수를 작동시키자?
+        if (isActivated && beaconActivate != null)
+        {
+            beaconActivate.ActivateBeacon();
+        }
+        else
+        {
+
+        }
     }
 
     // memo : PickupableItem의 ChangeColor코드와 중복이다. 상속받아서 쓰는 것이 나을 듯 한데..Item, 혹은 Object라는 클래스를 만들어 상속받는게 좋지 않을까?

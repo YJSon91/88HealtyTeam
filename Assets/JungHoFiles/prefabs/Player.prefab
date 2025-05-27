@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 4282260915482667494}
   - component: {fileID: 6673220174623601874}
   - component: {fileID: 6268984359483430447}
-  - component: {fileID: 4976121681518464601}
   - component: {fileID: 3103298478589007589}
   - component: {fileID: 581792759625372659}
   - component: {fileID: 1180586522275306552}
+  - component: {fileID: 352378580405221355}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -88,27 +88,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4976121681518464601
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1900246805791579640}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &3103298478589007589
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -175,9 +154,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  sprintMultiplier: 2
+  jumpHeight: 1.5
+  gravity: -9.81
   lookSensitivity: 2
   maxLookX: 90
   minLookX: -90
+--- !u!136 &352378580405221355
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900246805791579640}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4707210547551620639
 GameObject:
   m_ObjectHideFlags: 0

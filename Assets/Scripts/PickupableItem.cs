@@ -18,8 +18,6 @@ public class PickupableItem : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log($"create: {itemData.itemName} (ID: {itemData.itemID} COLOR: {itemData.itemColor})");
-
         renderer = GetComponent<Renderer>();
 
         renderer.material.color = ChangeColor(itemData.itemColor);
@@ -28,7 +26,7 @@ public class PickupableItem : MonoBehaviour
     /// <summary>
     /// 아이템을 들어올렸을 때의 콜백 메소드
     /// </summary>
-    private void OnPickup()
+    public void OnPickup()
     {
         Debug.Log($"Picked up: {itemData.itemName} (ID: {itemData.itemID})");
     }
@@ -36,11 +34,15 @@ public class PickupableItem : MonoBehaviour
     /// <summary>
     /// 비콘에 아이템이 배치되었을 때의 콜백 메소드
     /// </summary>
-    private void OnPlace()
+    public void OnPlace<T>(T target)
     {
-
+        if (target is Beacon beacon)
+        {
+            Debug.Log($"Placed {itemData.itemName} on {beacon.beaconData.beaconName}");
+        }
     }
 
+    // memo : Beacon의 ChangeColor코드와 중복이다. 상속받아서 쓰는 것이 나을 듯 한데..Item, 혹은 Object라는 클래스를 만들어 상속받는게 좋지 않을까?
     private Color ChangeColor(ItemColor itemColor)
     {
         switch (itemColor)

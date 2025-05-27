@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 592176b46fb3ae24091dd2d46bfe718d, type: 3}
-  m_Name: TypeA
+  m_Script: {fileID: 11500000, guid: 1381f1a16f946e243882be6bafa60c19, type: 3}
+  m_Name: BeaconA
   m_EditorClassIdentifier: 
-  itemID: 2d94eb72-2a1d-454f-99d9-541e7c419329
-  itemName: TypeA
-  itemColor: 0
-  description: "A\uD0C0\uC785 \uC544\uC774\uD15C"
+  beaconID: 6f05edd4-4c0a-41b0-9a07-152f36608267
+  beaconName: BeaconA
+  beaconColor: 0
+  description: "A\uD0C0\uC785 \uBE44\uCF58"

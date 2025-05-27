@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-[CreateAssetMenu(fileName = "Beacon", menuName = "Objects/BeaconData", order = 1)]
+[CreateAssetMenu(fileName = "Beacon", menuName = "Objects/Beacon", order = 1)]
 public class BeaconData : ScriptableObject
 {
     public string beaconID;

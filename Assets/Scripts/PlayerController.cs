@@ -178,6 +178,7 @@ public class PlayerController : MonoBehaviour
         {
             if (Physics.Raycast(rays[i], 0.1f, groundLayerMask))
             {
+                Debug.DrawRay(rays[i].origin, rays[i].direction * 0.2f, Color.red, 1f);
                 return true;
             }
         }

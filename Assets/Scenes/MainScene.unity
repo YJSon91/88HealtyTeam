@@ -512,16 +512,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   curMovementInput: {x: 0, y: 0}
+  dashSpeed: 1.5
   jumpForce: 80
   groundLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 55
+  maxJumpStack: 1
   cameraContainer: {fileID: 1088463025}
   minLookX: -85
   maxLookX: 85
-  camCurXRotation: 0
   camSensitivity: 0.1
-  mouseDelta: {x: 0, y: 0}
   cam: {fileID: 6324296}
   tabMenuUI: {fileID: 0}
 --- !u!114 &1985238085
@@ -633,6 +633,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: df32fd77-9b30-426d-a8c2-e0843d9fe0ed
     m_ActionName: Player/RightButton[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1985238084}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnDash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 051a9be1-c112-4ce9-9b1e-c761d85db653
+    m_ActionName: Player/Dash[/Keyboard/leftShift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

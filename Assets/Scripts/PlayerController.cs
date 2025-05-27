@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public interface IInteractable //오브젝트 상호작용은 구현하시는 분들이 해당 인터페이스를 오브젝트의 스크립트에 상속받아서 만들어야 해요.
 {
@@ -14,6 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashSpeed; // 대시 속도 배율
     [SerializeField] private float jumpForce = 80f;// 점프 힘
     public bool isDashing = false;// 대시 여부를 나타내는 변수
+    public bool dashBlocked = false; // 대시 금지 상태
     public bool IsDashing => isDashing; // 읽기 전용 프로퍼티로 노출
     [Header("Ground Check")]
     public LayerMask groundLayerMask;
@@ -105,6 +107,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnDash(InputAction.CallbackContext context)
     {
+        if (dashBlocked) return; // 쿨타임 중이면 대시 불가
         if (playerCondition != null && playerCondition.Stamina <= 0) return; // 스태미나가 없으면 대시 불가
         if (context.phase == InputActionPhase.Performed)
         {
@@ -114,6 +117,14 @@ public class PlayerController : MonoBehaviour
         {
             isDashing = false;
         }
+    }
+
+    public IEnumerator DashCooldown()
+    {
+        dashBlocked = true;
+        isDashing = false; // 대시 중이면 즉시 해제
+        yield return new WaitForSeconds(5f);
+        dashBlocked = false;
     }
 
     public void OnLook(InputAction.CallbackContext context)

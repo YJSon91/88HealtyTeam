@@ -642,6 +642,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0fa5dcff24498242b0cd1a74d51974b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 100
+  Stamina: 100
+  staminaDecreasePerSec: 20
+  staminaRegenPerSec: 10
+  DieUI: {fileID: 0}
 --- !u!114 &1985238084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -658,6 +663,8 @@ MonoBehaviour:
   curMovementInput: {x: 0, y: 0}
   dashSpeed: 1.5
   jumpForce: 80
+  isDashing: 0
+  dashBlocked: 0
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 55

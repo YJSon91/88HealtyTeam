@@ -24,6 +24,11 @@ public class PlayerCondition : MonoBehaviour
         if (DieUI != null)
             DieUI.SetActive(false);//죽은 상태일 때 UI 비활성화
     }
+
+    private void Awake()
+    {
+        playerController = GetComponent<PlayerController>();
+    }
     void Update()
     {
         if (!isDead && health<= 0)//health의 현재 값이 0 이하일 때
@@ -50,6 +55,10 @@ public class PlayerCondition : MonoBehaviour
     {
         if (playerController != null)
         {
+            if (Stamina <= 0)
+            {
+                Coroutine dashCoroutine = StartCoroutine(playerController.DashCooldown()); // 대시 쿨타임 코루틴 시작
+            }
             if (playerController.IsDashing)
             {
                 Stamina -= staminaDecreasePerSec * Time.deltaTime;

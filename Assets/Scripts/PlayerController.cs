@@ -13,8 +13,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector2 curMovementInput;//현재 이동 입력값
     [SerializeField] private float dashSpeed; // 대시 속도 배율
     [SerializeField] private float jumpForce = 80f;// 점프 힘
-    private bool isDashing = false;// 대시 여부를 나타내는 변수
+    public bool isDashing = false;// 대시 여부를 나타내는 변수
+    public bool IsDashing => isDashing; // 읽기 전용 프로퍼티로 노출
+    [Header("Ground Check")]
     public LayerMask groundLayerMask;
+    [Header("Jump")]
     private int _jumpStack;//점프 스택, _jumpStack으로 선언하여 재귀 호출 방지
     [SerializeField] private int maxJumpStack;// 1일 경우 더블 점프 가능
     public int jumpStack
@@ -32,16 +35,20 @@ public class PlayerController : MonoBehaviour
     private Vector2 mouseDelta;
     public Camera cam; // 플레이어 카메라
 
-    // Tab UI 오브젝트 선언 (인스펙터에서 할당)
-    [SerializeField] private GameObject tabMenuUI;
+    [Header("UI")]
+    [SerializeField] private GameObject tabMenuUI;// Tab UI 오브젝트 선언 (인스펙터에서 할당)
+    [SerializeField] private GameObject rightClickUI; // 우클릭 UI 오브젝트 (인스펙터에서 할당, 오브젝트 정보를 표시하기 위한 UI)
 
     private bool isPaused = false;
 
     private Rigidbody rb;
+    private PlayerCondition playerCondition;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+
+        playerCondition = GetComponent<PlayerCondition>();
     }
 
     void Start()
@@ -98,6 +105,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnDash(InputAction.CallbackContext context)
     {
+        if (playerCondition != null && playerCondition.Stamina <= 0) return; // 스태미나가 없으면 대시 불가
         if (context.phase == InputActionPhase.Performed)
         {
             isDashing = true;
@@ -142,15 +150,25 @@ public class PlayerController : MonoBehaviour
             // 카메라 중앙에서 Ray를 쏨
             Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
             int mask = ~LayerMask.GetMask("Player"); // 플레이어 레이어를 제외한 모든 레이어에 대해 Raycast
-            if (Physics.Raycast(ray, out RaycastHit hit, 30f, mask)) // 30f: 상호작용 거리
+            if (Physics.Raycast(ray, out RaycastHit hit, 10f, mask)) // 10f: 상호작용 거리
             {
                 var interactable = hit.collider.GetComponent<IInteractable>();
                 if (interactable != null)
                 {
-                    interactable.OnInteract();
+                    rightClickUI.SetActive(true); // 우클릭시 UI 활성화
                 }
             }
         }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            rightClickUI.SetActive(false); // 우클릭 UI 비활성화
+        }
+    }
+
+    public void OnRightClick(InputAction.CallbackContext context)
+    {
+        if (isPaused) return; // 퍼즈 중 입력 무시
+        // 오브젝트가 구현되고 나서 구현 예정
     }
 
     public void OnTab(InputAction.CallbackContext context)

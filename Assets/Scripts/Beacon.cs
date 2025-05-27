@@ -29,7 +29,7 @@ public class Beacon : MonoBehaviour
         {
             if (ReceiveItem(item))
             {
-                item.OnPlace<Beacon>(this); // 아이템이 비콘에 배치되었을 때, 아이템 작동 메소드 호출
+                item.OnPlace(); // 아이템이 비콘에 배치되었을 때, 아이템 작동 메소드 호출
 
                 ActivateGimmick();
             }

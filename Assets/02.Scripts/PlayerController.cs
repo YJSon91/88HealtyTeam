@@ -164,6 +164,21 @@ public class PlayerController : MonoBehaviour
         {
             if (heldItem != null)
             {
+                Collider itemCollider = heldItem.GetComponent<Collider>();
+                if (itemCollider != null)
+                {
+                    Vector3 dropPosition = heldItem.transform.position;
+                    Vector3 halfExtents = itemCollider.bounds.extents;
+                    Quaternion orientation = heldItem.transform.rotation;
+                    int itemDropMask = ~LayerMask.GetMask("Player"); // Player 레이어만 제외
+
+                    // 겹치는 오브젝트가 있으면 드랍 불가
+                    if (Physics.CheckBox(dropPosition, halfExtents, orientation, itemDropMask))
+                    {
+                        Debug.Log("이 위치에는 아이템을 내려놓을 수 없습니다. (다른 오브젝트와 겹침)");
+                        return;
+                    }
+                }
                 // 아이템 내려놓기
                 heldItem.transform.SetParent(null);
                 var rb = heldItem.GetComponent<Rigidbody>();

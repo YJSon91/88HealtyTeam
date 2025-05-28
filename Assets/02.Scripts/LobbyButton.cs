@@ -1,116 +1,116 @@
-// LobbyButton.cs
+ï»¿// LobbyButton.cs
 using UnityEngine;
 
 public class LobbyButton : MonoBehaviour
 {
-    // ¡Ú Inspector¿¡¼­ ¹İµå½Ã ÇÒ´çÇØÁÖ¼¼¿ä! ¡Ú
+    // â˜… Inspectorì—ì„œ ë°˜ë“œì‹œ í• ë‹¹í•´ì£¼ì„¸ìš”! â˜…
     public LobbyGameManager lobbyGameManager;
-    public Material clearedMaterial;        // ½ºÅ×ÀÌÁö Å¬¸®¾î ½Ã Àû¿ëÇÒ ¸ÓÆ¼¸®¾ó
-    public Material originalMaterial;       // ¿ø·¡ »óÅÂÀÏ ¶§ Àû¿ëÇÒ ¸ÓÆ¼¸®¾ó (½ÃÀÛ ½Ã ¸ÓÆ¼¸®¾ó°ú ´Ù¸¦ °æ¿ì ´ëºñ)
+    public Material clearedMaterial;        // ìŠ¤í…Œì´ì§€ í´ë¦¬ì–´ ì‹œ ì ìš©í•  ë¨¸í‹°ë¦¬ì–¼
+    public Material originalMaterial;       // ì›ë˜ ìƒíƒœì¼ ë•Œ ì ìš©í•  ë¨¸í‹°ë¦¬ì–¼ (ì‹œì‘ ì‹œ ë¨¸í‹°ë¦¬ì–¼ê³¼ ë‹¤ë¥¼ ê²½ìš° ëŒ€ë¹„)
 
-    public string targetStageName = "Stage1"; // ÀÌ ¹öÆ°ÀÌ ¹İÀÀÇÒ ½ºÅ×ÀÌÁö ÀÌ¸§
+    public string targetStageName = "Stage1"; // ì´ ë²„íŠ¼ì´ ë°˜ì‘í•  ìŠ¤í…Œì´ì§€ ì´ë¦„
 
     private Renderer buttonRenderer;
-    private Material internalOriginalMaterial; // ½ºÅ©¸³Æ® ½ÃÀÛ ½ÃÁ¡ÀÇ ½ÇÁ¦ ¸ÓÆ¼¸®¾ó ÀúÀå¿ë
+    private Material internalOriginalMaterial; // ìŠ¤í¬ë¦½íŠ¸ ì‹œì‘ ì‹œì ì˜ ì‹¤ì œ ë¨¸í‹°ë¦¬ì–¼ ì €ì¥ìš©
 
     void Start()
     {
-        Debug.Log(gameObject.name + " - LobbyButton Start() È£ÃâµÊ.");
+        Debug.Log(gameObject.name + " - LobbyButton Start() í˜¸ì¶œë¨.");
 
         buttonRenderer = GetComponent<Renderer>();
         if (buttonRenderer == null)
         {
-            Debug.LogError(gameObject.name + " - Renderer ÄÄÆ÷³ÍÆ®¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù! ÀÌ ½ºÅ©¸³Æ®´Â Mesh Renderer°¡ ÀÖ´Â 3D ¿ÀºêÁ§Æ®(¿¹: Cube)¿¡ ÀÖ¾î¾ß ÇÕ´Ï´Ù.");
-            enabled = false; // ¹®Á¦°¡ ÀÖÀ¸¸é ½ºÅ©¸³Æ® ºñÈ°¼ºÈ­
+            Debug.LogError(gameObject.name + " - Renderer ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤! ì´ ìŠ¤í¬ë¦½íŠ¸ëŠ” Mesh Rendererê°€ ìˆëŠ” 3D ì˜¤ë¸Œì íŠ¸(ì˜ˆ: Cube)ì— ìˆì–´ì•¼ í•©ë‹ˆë‹¤.");
+            enabled = false; // ë¬¸ì œê°€ ìˆìœ¼ë©´ ìŠ¤í¬ë¦½íŠ¸ ë¹„í™œì„±í™”
             return;
         }
-        Debug.Log(gameObject.name + " - Renderer Ã£À½: " + buttonRenderer.GetType().Name);
+        Debug.Log(gameObject.name + " - Renderer ì°¾ìŒ: " + buttonRenderer.GetType().Name);
 
-        // ½ÃÀÛ ½ÃÁ¡ÀÇ ¸ÓÆ¼¸®¾óÀ» ³»ºÎ º¯¼ö¿¡ ÀúÀå (Inspector¿¡¼­ originalMaterialÀ» ÇÒ´çÇß´Ù¸é ±×°ÍÀ» ¿ì¼± »ç¿ë)
+        // ì‹œì‘ ì‹œì ì˜ ë¨¸í‹°ë¦¬ì–¼ì„ ë‚´ë¶€ ë³€ìˆ˜ì— ì €ì¥ (Inspectorì—ì„œ originalMaterialì„ í• ë‹¹í–ˆë‹¤ë©´ ê·¸ê²ƒì„ ìš°ì„  ì‚¬ìš©)
         if (originalMaterial != null)
         {
             internalOriginalMaterial = originalMaterial;
-            Debug.Log(gameObject.name + " - Inspector¿¡ ÇÒ´çµÈ originalMaterial »ç¿ë: " + internalOriginalMaterial.name);
+            Debug.Log(gameObject.name + " - Inspectorì— í• ë‹¹ëœ originalMaterial ì‚¬ìš©: " + internalOriginalMaterial.name);
         }
         else if (buttonRenderer.sharedMaterial != null)
-        { // sharedMaterialÀ» ÀĞ¾î¿Í¼­ ÀÎ½ºÅÏ½º¸¦ ¸¸µéÁö ¾Êµµ·Ï ÁÖÀÇ
-            internalOriginalMaterial = buttonRenderer.sharedMaterial; // ½ÃÀÛÁ¡ ¸ÓÆ¼¸®¾ó·Î »ç¿ë (°øÀ¯ ¸ÓÆ¼¸®¾ó)
-            Debug.Log(gameObject.name + " - ÇöÀç buttonRenderer.sharedMaterialÀ» originalMaterial·Î »ç¿ë: " + internalOriginalMaterial.name);
+        { // sharedMaterialì„ ì½ì–´ì™€ì„œ ì¸ìŠ¤í„´ìŠ¤ë¥¼ ë§Œë“¤ì§€ ì•Šë„ë¡ ì£¼ì˜
+            internalOriginalMaterial = buttonRenderer.sharedMaterial; // ì‹œì‘ì  ë¨¸í‹°ë¦¬ì–¼ë¡œ ì‚¬ìš© (ê³µìœ  ë¨¸í‹°ë¦¬ì–¼)
+            Debug.Log(gameObject.name + " - í˜„ì¬ buttonRenderer.sharedMaterialì„ originalMaterialë¡œ ì‚¬ìš©: " + internalOriginalMaterial.name);
         }
         else
         {
-            Debug.LogWarning(gameObject.name + " - originalMaterialÀ» ¼³Á¤ÇÒ ¼ö ¾ø½À´Ï´Ù. Renderer¿¡ ¸ÓÆ¼¸®¾óÀÌ ¾ø½À´Ï´Ù.");
+            Debug.LogWarning(gameObject.name + " - originalMaterialì„ ì„¤ì •í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤. Rendererì— ë¨¸í‹°ë¦¬ì–¼ì´ ì—†ìŠµë‹ˆë‹¤.");
         }
 
 
-        // LobbyGameManager ÂüÁ¶ È®ÀÎ (Inspector¿¡¼­ ÇÒ´ç ¾ÈµÆÀ¸¸é Ã£¾Æº¸±â)
+        // LobbyGameManager ì°¸ì¡° í™•ì¸ (Inspectorì—ì„œ í• ë‹¹ ì•ˆëìœ¼ë©´ ì°¾ì•„ë³´ê¸°)
         if (lobbyGameManager == null)
         {
-            Debug.LogWarning(gameObject.name + " - LobbyGameManager°¡ Inspector¿¡ ÇÒ´çµÇÁö ¾Ê¾Ò½À´Ï´Ù. ¾À¿¡¼­ FindObjectOfTypeÀ¸·Î Ã£½À´Ï´Ù.");
+            Debug.LogWarning(gameObject.name + " - LobbyGameManagerê°€ Inspectorì— í• ë‹¹ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤. ì”¬ì—ì„œ FindObjectOfTypeìœ¼ë¡œ ì°¾ìŠµë‹ˆë‹¤.");
             lobbyGameManager = FindObjectOfType<LobbyGameManager>();
         }
 
         if (lobbyGameManager == null)
         {
-            Debug.LogError(gameObject.name + " - LobbyGameManager ÀÎ½ºÅÏ½º¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù! Update ·ÎÁ÷ÀÌ Á¤»ó ÀÛµ¿ÇÏÁö ¾Ê½À´Ï´Ù.");
-            enabled = false; // ¹®Á¦°¡ ÀÖÀ¸¸é ½ºÅ©¸³Æ® ºñÈ°¼ºÈ­
+            Debug.LogError(gameObject.name + " - LobbyGameManager ì¸ìŠ¤í„´ìŠ¤ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤! Update ë¡œì§ì´ ì •ìƒ ì‘ë™í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+            enabled = false; // ë¬¸ì œê°€ ìˆìœ¼ë©´ ìŠ¤í¬ë¦½íŠ¸ ë¹„í™œì„±í™”
             return;
         }
-        Debug.Log(gameObject.name + " - LobbyGameManager ÂüÁ¶ ¼º°ø: " + lobbyGameManager.gameObject.name);
+        Debug.Log(gameObject.name + " - LobbyGameManager ì°¸ì¡° ì„±ê³µ: " + lobbyGameManager.gameObject.name);
 
-        // °ÔÀÓ ½ÃÀÛ ½Ã ÃÊ±â ¸ÓÆ¼¸®¾ó Àû¿ë (originalMaterialÀÌ Inspector¿¡ ÁöÁ¤µÇ¾î ÀÖÀ¸¸é ±×°ÍÀ¸·Î, ¾Æ´Ï¸é ÇöÀç »óÅÂ À¯Áö)
+        // ê²Œì„ ì‹œì‘ ì‹œ ì´ˆê¸° ë¨¸í‹°ë¦¬ì–¼ ì ìš© (originalMaterialì´ Inspectorì— ì§€ì •ë˜ì–´ ìˆìœ¼ë©´ ê·¸ê²ƒìœ¼ë¡œ, ì•„ë‹ˆë©´ í˜„ì¬ ìƒíƒœ ìœ ì§€)
         if (internalOriginalMaterial != null)
         {
-            buttonRenderer.material = internalOriginalMaterial; // ¿©±â¼­ materialÀ» ÇÒ´çÇÏ¸é ÀÎ½ºÅÏ½º°¡ »ı¼ºµÊ
+            buttonRenderer.material = internalOriginalMaterial; // ì—¬ê¸°ì„œ materialì„ í• ë‹¹í•˜ë©´ ì¸ìŠ¤í„´ìŠ¤ê°€ ìƒì„±ë¨
         }
     }
 
     void Update()
     {
-        // Start()¿¡¼­ ÁÖ¿ä ÂüÁ¶¸¦ ¸ø Ã£¾ÒÀ¸¸é Update ½ÇÇà ¾È ÇÔ (À§¿¡¼­ enabled = false Ã³¸®)
-        // Debug.Log(gameObject.name + " - LobbyButton Update() È£ÃâµÊ."); // ³Ê¹« ÀÚÁÖ ÂïÈ÷¹Ç·Î ÇÊ¿ä½Ã¿¡¸¸ ÁÖ¼® ÇØÁ¦
+        // Start()ì—ì„œ ì£¼ìš” ì°¸ì¡°ë¥¼ ëª» ì°¾ì•˜ìœ¼ë©´ Update ì‹¤í–‰ ì•ˆ í•¨ (ìœ„ì—ì„œ enabled = false ì²˜ë¦¬)
+        // Debug.Log(gameObject.name + " - LobbyButton Update() í˜¸ì¶œë¨."); // ë„ˆë¬´ ìì£¼ ì°íˆë¯€ë¡œ í•„ìš”ì‹œì—ë§Œ ì£¼ì„ í•´ì œ
 
         if (lobbyGameManager == null || buttonRenderer == null)
         {
-            return; // ÇÊ¼ö ÂüÁ¶ ¾øÀ¸¸é ½ÇÇà Áß´Ü
+            return; // í•„ìˆ˜ ì°¸ì¡° ì—†ìœ¼ë©´ ì‹¤í–‰ ì¤‘ë‹¨
         }
 
-        // LobbyGameManagerÀÇ isStage1Cleared °ªÀ» ½Ç½Ã°£À¸·Î ÀĞ¾î¿È
+        // LobbyGameManagerì˜ isStage1Cleared ê°’ì„ ì‹¤ì‹œê°„ìœ¼ë¡œ ì½ì–´ì˜´
         bool stageIsCurrentlyClearedInManager = lobbyGameManager.isStage1Cleared;
 
-        // (µğ¹ö±ë¿ë) ÇöÀç »óÅÂ °ªµéÀ» ¸Å ÇÁ·¹ÀÓ ·Î±ë (ÇÊ¿ä ¾øÀ¸¸é ÁÖ¼® Ã³¸®)
+        // (ë””ë²„ê¹…ìš©) í˜„ì¬ ìƒíƒœ ê°’ë“¤ì„ ë§¤ í”„ë ˆì„ ë¡œê¹… (í•„ìš” ì—†ìœ¼ë©´ ì£¼ì„ ì²˜ë¦¬)
         // Debug.Log(gameObject.name + $" - Update: target='{targetStageName}', LGM.isStage1Cleared='{stageIsCurrentlyClearedInManager}'");
 
         if (stageIsCurrentlyClearedInManager && targetStageName == "Stage1")
         {
-            // ½ºÅ×ÀÌÁö°¡ Å¬¸®¾îµÈ »óÅÂÀÌ°í, ÀÌ ¹öÆ°ÀÌ Stage1À» ´ã´çÇÒ °æ¿ì
+            // ìŠ¤í…Œì´ì§€ê°€ í´ë¦¬ì–´ëœ ìƒíƒœì´ê³ , ì´ ë²„íŠ¼ì´ Stage1ì„ ë‹´ë‹¹í•  ê²½ìš°
             if (clearedMaterial != null)
             {
-                if (buttonRenderer.sharedMaterial != clearedMaterial) // ÀÌ¹Ì Àû¿ëµÈ ¸ÓÆ¼¸®¾óÀÌ ¾Æ´Ï¸é º¯°æ
+                if (buttonRenderer.sharedMaterial != clearedMaterial) // ì´ë¯¸ ì ìš©ëœ ë¨¸í‹°ë¦¬ì–¼ì´ ì•„ë‹ˆë©´ ë³€ê²½
                 {
                     buttonRenderer.material = clearedMaterial;
-                    Debug.Log(gameObject.name + " - 'CLEARED' »óÅÂ·Î ¸ÓÆ¼¸®¾ó º¯°æ ½Ãµµ!");
+                    Debug.Log(gameObject.name + " - 'CLEARED' ìƒíƒœë¡œ ë¨¸í‹°ë¦¬ì–¼ ë³€ê²½ ì‹œë„!");
                 }
             }
             else
             {
-                // Debug.LogWarning(gameObject.name + " - clearedMaterialÀÌ Inspector¿¡ ÇÒ´çµÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+                // Debug.LogWarning(gameObject.name + " - clearedMaterialì´ Inspectorì— í• ë‹¹ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
             }
         }
         else
         {
-            // ½ºÅ×ÀÌÁö°¡ Å¬¸®¾îµÇÁö ¾Ê¾Ò°Å³ª, ÀÌ ¹öÆ°ÀÌ Stage1 ´ã´çÀÌ ¾Æ´Ò °æ¿ì (Stage1ÀÌ ¾Æ´Ñ ´Ù¸¥ targetStageNameÀÏ ¼öµµ ÀÖÀ½)
+            // ìŠ¤í…Œì´ì§€ê°€ í´ë¦¬ì–´ë˜ì§€ ì•Šì•˜ê±°ë‚˜, ì´ ë²„íŠ¼ì´ Stage1 ë‹´ë‹¹ì´ ì•„ë‹ ê²½ìš° (Stage1ì´ ì•„ë‹Œ ë‹¤ë¥¸ targetStageNameì¼ ìˆ˜ë„ ìˆìŒ)
             if (internalOriginalMaterial != null)
             {
-                if (buttonRenderer.sharedMaterial != internalOriginalMaterial) // ÀÌ¹Ì Àû¿ëµÈ ¸ÓÆ¼¸®¾óÀÌ ¾Æ´Ï¸é º¯°æ
+                if (buttonRenderer.sharedMaterial != internalOriginalMaterial) // ì´ë¯¸ ì ìš©ëœ ë¨¸í‹°ë¦¬ì–¼ì´ ì•„ë‹ˆë©´ ë³€ê²½
                 {
                     buttonRenderer.material = internalOriginalMaterial;
-                    Debug.Log(gameObject.name + " - 'NOT CLEARED' »óÅÂ·Î ¸ÓÆ¼¸®¾ó º¯°æ ½Ãµµ!");
+                    Debug.Log(gameObject.name + " - 'NOT CLEARED' ìƒíƒœë¡œ ë¨¸í‹°ë¦¬ì–¼ ë³€ê²½ ì‹œë„!");
                 }
             }
             else
             {
-                // Debug.LogWarning(gameObject.name + " - internalOriginalMaterialÀÌ ¼³Á¤µÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+                // Debug.LogWarning(gameObject.name + " - internalOriginalMaterialì´ ì„¤ì •ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
             }
         }
     }

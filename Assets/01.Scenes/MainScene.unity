@@ -4610,6 +4610,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2137195129188807160, guid: 4f019145598ea474b899ca25a03acd09, type: 3}
   m_PrefabInstance: {fileID: 1394667499}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &660761154 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 724175890263792489, guid: 24b33d997b1e05949ac473d446bfaf18, type: 3}
+  m_PrefabInstance: {fileID: 152907447}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da914b7ac4a90ed409969df4f1b7f922, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &667836890
 GameObject:
   m_ObjectHideFlags: 0
@@ -8698,6 +8709,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 937258989476077225, guid: 24b33d997b1e05949ac473d446bfaf18, type: 3}
   m_PrefabInstance: {fileID: 1171900712}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1171900714 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 724175890263792489, guid: 24b33d997b1e05949ac473d446bfaf18, type: 3}
+  m_PrefabInstance: {fileID: 1171900712}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da914b7ac4a90ed409969df4f1b7f922, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1173714722
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15480,6 +15502,7 @@ GameObject:
   - component: {fileID: 4990751886203742882}
   - component: {fileID: 3378366595657807849}
   - component: {fileID: 1433031158}
+  - component: {fileID: 5564319382824847568}
   m_Layer: 0
   m_Name: Beacon Room Door
   m_TagString: Untagged
@@ -18522,6 +18545,7 @@ GameObject:
   - component: {fileID: 7270245565297165152}
   - component: {fileID: 1978698017385977877}
   - component: {fileID: 8764658481901920452}
+  - component: {fileID: 8764658481901920453}
   m_Layer: 0
   m_Name: Exit Door
   m_TagString: Untagged
@@ -19308,6 +19332,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 667836891}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5564319382824847568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477033833855559349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0655a5e97a46c55449a162acd3c1cf3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  oxPanel: {fileID: 660761154}
 --- !u!1001 &5582711766037999239
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20932,6 +20969,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8764658481901920453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4744189713196553076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0655a5e97a46c55449a162acd3c1cf3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  oxPanel: {fileID: 1171900714}
 --- !u!65 &8868230363870674393
 BoxCollider:
   m_ObjectHideFlags: 0

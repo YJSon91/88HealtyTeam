@@ -76,7 +76,7 @@ public class LobbyButton : MonoBehaviour
         }
 
         // GameManager의 isStage1Cleared 값을 실시간으로 읽어옴
-        bool stageIsCurrentlyClearedInManager = GameManager.isStage1Cleared;
+        bool stageIsCurrentlyClearedInManager = GameManager.isStage1EffectivelyCleared;
 
         // (디버깅용) 현재 상태 값들을 매 프레임 로깅 (필요 없으면 주석 처리)
         // Debug.Log(gameObject.name + $" - Update: target='{targetStageName}', LGM.isStage1Cleared='{stageIsCurrentlyClearedInManager}'");

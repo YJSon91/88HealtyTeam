@@ -8,12 +8,13 @@ public class Beacon : MonoBehaviour
 
     private Renderer renderer;
     [SerializeField] private bool isActivated = false;
-    private IBeaconActivate beaconActivate;
+    public IBeaconActivate beaconActivate;
+    public GameObject door;
 
     void Start()
     {
         renderer = GetComponent<Renderer>();
-
+        beaconActivate = door.GetComponent<IBeaconActivate>();
         renderer.material.color = ChangeColor(beaconData.beaconColor);
     }
 
@@ -48,6 +49,8 @@ public class Beacon : MonoBehaviour
         if (item != null)
         {
             isActivated = false; // 비활성화 상태로 변경
+
+            ActivateGimmick();
         }
     }
 
@@ -82,7 +85,7 @@ public class Beacon : MonoBehaviour
         }
         else
         {
-
+            beaconActivate.DeactivateBeacon();
         }
     }
 

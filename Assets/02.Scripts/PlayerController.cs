@@ -164,15 +164,12 @@ public class PlayerController : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hit, 10f, mask)) // 10f: 상호작용 거리
             {
                 var interactable = hit.collider.GetComponent<IInteractable>();
+
                 if (interactable != null)
                 {
-                    rightClickUI.SetActive(true); // 우클릭시 UI 활성화
+                    interactable.OnInteract(); // IInteractable 인터페이스를 구현한 오브젝트의 OnInteract 메서드 호출
                 }
             }
-        }
-        else if (context.phase == InputActionPhase.Canceled)
-        {
-            rightClickUI.SetActive(false); // 우클릭 UI 비활성화
         }
     }
 

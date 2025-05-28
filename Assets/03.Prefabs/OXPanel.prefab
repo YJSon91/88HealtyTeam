@@ -324,6 +324,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 937258989476077225}
+  - component: {fileID: 724175890263792489}
   m_Layer: 0
   m_Name: OXPanel
   m_TagString: Untagged
@@ -349,3 +350,17 @@ Transform:
   - {fileID: 5094663749711778123}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &724175890263792489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7906617828503547329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da914b7ac4a90ed409969df4f1b7f922, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panelO: {fileID: 4478339084799458481}
+  panelX: {fileID: 5104788115765183914}

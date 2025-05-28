@@ -11,12 +11,15 @@ public interface IBeaconActivate
 
 public class Door : MonoBehaviour, IBeaconActivate
 {
+    public OXPanel oxPanel;
     public void ActivateBeacon()
     {
         gameObject.SetActive(false);
+        oxPanel.ShowPanelO();
     }
     public void DeactivateBeacon()
     {
         gameObject.SetActive(true);
+        oxPanel.ShowPanelX();
     }
 }

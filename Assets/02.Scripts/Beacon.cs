@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Beacon : MonoBehaviour
+public class Beacon : MonoBehaviour, IInteractable
 {
     public BeaconData beaconData;
 
@@ -102,5 +102,16 @@ public class Beacon : MonoBehaviour
             default:
                 return Color.white;
         }
+    }
+
+    public InteractableController GetInteractableInfo()
+    {
+        InteractableController interactableInfo = new InteractableController
+        {
+            name = beaconData.beaconName,
+            description = beaconData.description,
+        };
+
+        return interactableInfo;
     }
 }

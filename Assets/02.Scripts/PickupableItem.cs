@@ -10,7 +10,7 @@ public enum ItemColor
     YELLOW,
 }
 
-public class PickupableItem : MonoBehaviour
+public class PickupableItem : MonoBehaviour, IInteractable
 {
     public PickupableItemData itemData;
 
@@ -55,5 +55,16 @@ public class PickupableItem : MonoBehaviour
             default:
                 return Color.white;
         }
+    }
+
+    public InteractableController GetInteractableInfo()
+    {
+        InteractableController interactableInfo = new InteractableController
+        {
+            name = itemData.itemName,
+            description = itemData.description,
+        };
+
+        return interactableInfo;
     }
 }

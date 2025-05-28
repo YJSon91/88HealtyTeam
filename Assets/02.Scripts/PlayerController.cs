@@ -2,9 +2,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 
-public interface IInteractable //오브젝트 상호작용은 구현하시는 분들이 해당 인터페이스를 오브젝트의 스크립트에 상속받아서 만들어야 해요.
+public interface IInteractable
 {
-    void OnInteract();
+    InteractableController GetInteractableInfo();
 }
 
 public class PlayerController : MonoBehaviour
@@ -45,6 +45,8 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rb;
     private PlayerCondition playerCondition;
+
+    private IInteractable interactable; // 상호작용 가능한 오브젝트를 저장할 변수
 
     private void Awake()
     {

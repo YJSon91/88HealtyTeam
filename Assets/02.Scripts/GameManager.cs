@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     // --- 퍼즐 및 버튼 상태 변수 ---
     // 이 변수들은 각 퍼즐/버튼 담당 스크립트에서 Report 함수를 호출하여 true로 변경됩니다.
     private bool isPuzzleSolved = false;
-    private bool isBeaconActivated = false;
+    public bool isBeaconActivated = false; //테스트 위해서 public선언 test 후 private로 변경 예정
     private bool isFinalButtonPressed = false; // 스테이지 내 최종 버튼
 
     // --- 로비 버튼 관련 (이전 기능 유지 또는 수정) ---
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            // DontDestroyOnLoad(gameObject); // 단일 씬이므로 필요 없을 수 있음
+           
         }
         else
         {
@@ -84,8 +84,7 @@ public class GameManager : MonoBehaviour
             GameOver("시간 초과!");
         }
 
-        // (참고) 이전의 CheckAndOpenFinalExit() 로직은 이제 ReportFinalStageButtonPressed()로 이동
-        // Update에서 최종 문을 직접 체크하는 대신, 최종 버튼이 눌렸을 때 명시적으로 열리도록 변경
+  
     }
 
     // --- 외부(퍼즐/아이템/플레이어 스크립트)에서 호출될 함수들 ---
@@ -183,8 +182,7 @@ public class GameManager : MonoBehaviour
         // Time.timeScale = 0; // (선택적)
     }
 
-    // --- (선택적) 로비 버튼 인디케이터 업데이트 로직 ---
-    // 이전에 LobbyButton과 연동되던 isStage1Cleared 변수 대신 isStage1EffectivelyCleared 사용
+
     private void UpdateLobbyButtonIndicator()
     {
         if (stage1LobbyButtonIndicator != null)

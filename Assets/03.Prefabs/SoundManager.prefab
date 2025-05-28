@@ -58,6 +58,7 @@ MonoBehaviour:
   doorOpenSound: {fileID: 0}
   footstepWalk: {fileID: 8300000, guid: 263f8aaa01d5d0041b082b7b69d9ca02, type: 3}
   footstepRun: {fileID: 8300000, guid: b094fecb8fdb976409a8cf8906519f7b, type: 3}
+  jumpSound: {fileID: 8300000, guid: e6d482a372fcda04399415614d6d9351, type: 3}
 --- !u!82 &4782323305424101358
 AudioSource:
   m_ObjectHideFlags: 0

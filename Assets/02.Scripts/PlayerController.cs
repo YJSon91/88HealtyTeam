@@ -37,6 +37,10 @@ public class PlayerController : MonoBehaviour
     private Vector2 mouseDelta;
     public Camera cam; // 플레이어 카메라
 
+    [Header("Item Pickup")]
+    private PickupableItem heldItem; // 현재 들고 있는 아이템
+    [SerializeField] private Transform PickUpContainer; // 아이템을 고정할 위치(인스펙터에서 할당)
+
     [Header("UI")]
     [SerializeField] private GameObject tabMenuUI;// Tab UI 오브젝트 선언 (인스펙터에서 할당)
     [SerializeField] private GameObject rightClickUI; // 우클릭 UI 오브젝트 (인스펙터에서 할당, 오브젝트 정보를 표시하기 위한 UI)
@@ -158,18 +162,58 @@ public class PlayerController : MonoBehaviour
         if (isPaused) return; // 퍼즈 중 입력 무시
         if (context.phase == InputActionPhase.Performed)
         {
-            // 카메라 중앙에서 Ray를 쏨
+            if (heldItem != null)
+            {
+                // 아이템 내려놓기
+                heldItem.transform.SetParent(null);
+                var rb = heldItem.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    rb.isKinematic = false;
+                    rb.detectCollisions = true;
+                }
+                heldItem.OnPlace();
+                heldItem = null;
+                return;
+            }
+
+            // 카메라 중앙에서 Ray를 쏨, 픽업 아이템이 없을 때만 실행
             Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
             int mask = ~LayerMask.GetMask("Player"); // 플레이어 레이어를 제외한 모든 레이어에 대해 Raycast
             if (Physics.Raycast(ray, out RaycastHit hit, 10f, mask)) // 10f: 상호작용 거리
             {
-                var interactable = hit.collider.GetComponent<IInteractable>();
-
-                if (interactable != null)
+                // PickupableItem 컴포넌트가 있으면 픽업
+                var pickupable = hit.collider.GetComponent<PickupableItem>();
+                if (pickupable != null)
                 {
-                    interactable.OnInteract(); // IInteractable 인터페이스를 구현한 오브젝트의 OnInteract 메서드 호출
+                    PickupItem(pickupable);
+                    return;
                 }
+                //좌클릭 상호작용 아이템이 추가될떄마다 더 추가될 예정
             }
+        }
+    }
+    
+    private void PickupItem(PickupableItem item)
+    {
+        if (item != null)
+        {
+            if (heldItem != null) return; // 이미 아이템을 들고 있으면 무시
+
+            heldItem = item;
+            // 아이템의 Rigidbody가 있다면 물리 영향 제거
+            var rb = heldItem.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.isKinematic = true;
+                rb.detectCollisions = false;
+            }
+            // 아이템을 플레이어의 itemHoldPoint에 붙임
+            heldItem.transform.SetParent(PickUpContainer);
+            heldItem.transform.localPosition = Vector3.zero;
+            heldItem.transform.localRotation = Quaternion.identity;
+
+            heldItem.OnPickup();
         }
     }
 

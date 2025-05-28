@@ -1,14 +1,14 @@
-﻿// LobbyGameManager.cs
+﻿// GameManager.cs
 using UnityEngine;
 
-public class LobbyGameManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     public bool isStage1Cleared = false;
     public LobbyButton stage1Button; // (선택적) LobbyButton 참조, 상태를 직접 읽기 위함
     public GameObject finalExitDoorObject; // ★ Inspector에서 FinalExitDoor 큐브를 연결!
 
     // (선택적) 싱글톤으로 만들어 다른 곳에서 쉽게 접근하게 할 수 있습니다.
-    public static LobbyGameManager Instance;
+    public static GameManager Instance;
     void Awake()
     {
         if (Instance == null) Instance = this;
@@ -20,7 +20,7 @@ public class LobbyGameManager : MonoBehaviour
         if (stageName == "Stage1")
         {
             isStage1Cleared = cleared;
-            Debug.Log("LobbyGameManager: Stage 1 clear status updated to " + cleared + " by UpdateStageStatus call.");
+            Debug.Log("GameManager: Stage 1 clear status updated to " + cleared + " by UpdateStageStatus call.");
 
             // 상태 변경 시 바로 최종 출구 조건 확인
             CheckAndOpenFinalExit();

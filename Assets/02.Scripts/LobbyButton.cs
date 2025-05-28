@@ -4,7 +4,7 @@ using UnityEngine;
 public class LobbyButton : MonoBehaviour
 {
     // ★ Inspector에서 반드시 할당해주세요! ★
-    public LobbyGameManager lobbyGameManager;
+    public GameManager GameManager;
     public Material clearedMaterial;        // 스테이지 클리어 시 적용할 머티리얼
     public Material originalMaterial;       // 원래 상태일 때 적용할 머티리얼 (시작 시 머티리얼과 다를 경우 대비)
 
@@ -43,20 +43,20 @@ public class LobbyButton : MonoBehaviour
         }
 
 
-        // LobbyGameManager 참조 확인 (Inspector에서 할당 안됐으면 찾아보기)
-        if (lobbyGameManager == null)
+        // GameManager 참조 확인 (Inspector에서 할당 안됐으면 찾아보기)
+        if (GameManager == null)
         {
-            Debug.LogWarning(gameObject.name + " - LobbyGameManager가 Inspector에 할당되지 않았습니다. 씬에서 FindObjectOfType으로 찾습니다.");
-            lobbyGameManager = FindObjectOfType<LobbyGameManager>();
+            Debug.LogWarning(gameObject.name + " - GameManager가 Inspector에 할당되지 않았습니다. 씬에서 FindObjectOfType으로 찾습니다.");
+            GameManager = FindObjectOfType<GameManager>();
         }
 
-        if (lobbyGameManager == null)
+        if (GameManager == null)
         {
-            Debug.LogError(gameObject.name + " - LobbyGameManager 인스턴스를 찾을 수 없습니다! Update 로직이 정상 작동하지 않습니다.");
+            Debug.LogError(gameObject.name + " - GameManager 인스턴스를 찾을 수 없습니다! Update 로직이 정상 작동하지 않습니다.");
             enabled = false; // 문제가 있으면 스크립트 비활성화
             return;
         }
-        Debug.Log(gameObject.name + " - LobbyGameManager 참조 성공: " + lobbyGameManager.gameObject.name);
+        Debug.Log(gameObject.name + " - GameManager 참조 성공: " + GameManager.gameObject.name);
 
         // 게임 시작 시 초기 머티리얼 적용 (originalMaterial이 Inspector에 지정되어 있으면 그것으로, 아니면 현재 상태 유지)
         if (internalOriginalMaterial != null)
@@ -70,13 +70,13 @@ public class LobbyButton : MonoBehaviour
         // Start()에서 주요 참조를 못 찾았으면 Update 실행 안 함 (위에서 enabled = false 처리)
         // Debug.Log(gameObject.name + " - LobbyButton Update() 호출됨."); // 너무 자주 찍히므로 필요시에만 주석 해제
 
-        if (lobbyGameManager == null || buttonRenderer == null)
+        if (GameManager == null || buttonRenderer == null)
         {
             return; // 필수 참조 없으면 실행 중단
         }
 
-        // LobbyGameManager의 isStage1Cleared 값을 실시간으로 읽어옴
-        bool stageIsCurrentlyClearedInManager = lobbyGameManager.isStage1Cleared;
+        // GameManager의 isStage1Cleared 값을 실시간으로 읽어옴
+        bool stageIsCurrentlyClearedInManager = GameManager.isStage1Cleared;
 
         // (디버깅용) 현재 상태 값들을 매 프레임 로깅 (필요 없으면 주석 처리)
         // Debug.Log(gameObject.name + $" - Update: target='{targetStageName}', LGM.isStage1Cleared='{stageIsCurrentlyClearedInManager}'");

@@ -4,7 +4,7 @@ using System.Collections;
 
 public interface IInteractable
 {
-    InteractableController GetInteractableInfo();
+    ObjectData GetInteractableInfo();
 }
 
 public class PlayerController : MonoBehaviour

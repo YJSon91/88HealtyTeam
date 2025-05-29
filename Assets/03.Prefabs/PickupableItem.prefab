@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6970872713764394220}
   - component: {fileID: 5519265103087238175}
   - component: {fileID: 1713444375421721372}
-  - component: {fileID: 5136428353478474478}
+  - component: {fileID: 6034147452141656359}
   m_Layer: 0
   m_Name: PickupableItem
   m_TagString: Untagged
@@ -134,7 +134,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5136428353478474478
+--- !u!114 &6034147452141656359
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7784971319548652723}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2566ba214ec05384fafa9b4ea1c64214, type: 3}
+  m_Script: {fileID: 11500000, guid: e7dd2aec8b11ddc4f8c2195187db9c93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemData: {fileID: 11400000, guid: 7329e4321d9085d4fa916835e64fdffb, type: 2}
+  objectData: {fileID: 11400000, guid: 7329e4321d9085d4fa916835e64fdffb, type: 2}

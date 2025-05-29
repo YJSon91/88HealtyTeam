@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7743001197941471829}
   - component: {fileID: 2298907004636641263}
   - component: {fileID: 6442451724315938271}
-  - component: {fileID: 822981288762029778}
+  - component: {fileID: 7496535502793476873}
   m_Layer: 0
   m_Name: Beacon
   m_TagString: Untagged
@@ -107,7 +107,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &822981288762029778
+--- !u!114 &7496535502793476873
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,8 +116,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 4983391574983786810}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b8f3441551bc9649b9b34a6aaaccd7e, type: 3}
+  m_Script: {fileID: 11500000, guid: 6a09e35490a51844fb2e66395da82f9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beaconData: {fileID: 11400000, guid: 931b33b8115aa294cba73dae646c9fb5, type: 2}
+  objectData: {fileID: 11400000, guid: 931b33b8115aa294cba73dae646c9fb5, type: 2}
   isActivated: 0

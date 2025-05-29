@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Beacon : MonoBehaviour, IInteractable
 {
-    public BeaconData beaconData;
+    public ObjectData objectData;
 
     private Renderer renderer;
     [SerializeField] private bool isActivated = false;
@@ -14,7 +14,7 @@ public class Beacon : MonoBehaviour, IInteractable
     {
         renderer = GetComponent<Renderer>();
 
-        renderer.material.color = ChangeColor(beaconData.beaconColor);
+        renderer.material.color = ChangeColor(objectData.objectColor);
     }
 
     void Update()
@@ -60,7 +60,7 @@ public class Beacon : MonoBehaviour, IInteractable
     {
         bool result = false;
 
-        if (item.itemData.itemColor == beaconData.beaconColor)
+        if (item.objectData.objectColor == objectData.objectColor)
         {
             result = true;
 
@@ -104,14 +104,8 @@ public class Beacon : MonoBehaviour, IInteractable
         }
     }
 
-    public InteractableController GetInteractableInfo()
+    public ObjectData GetInteractableInfo()
     {
-        InteractableController interactableInfo = new InteractableController
-        {
-            name = beaconData.beaconName,
-            description = beaconData.description,
-        };
-
-        return interactableInfo;
+        return objectData;
     }
 }

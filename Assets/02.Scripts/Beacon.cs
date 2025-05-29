@@ -6,7 +6,7 @@ public class Beacon : MonoBehaviour
 {
     public BeaconData beaconData;
 
-    private Renderer renderer;
+    private new Renderer renderer;
     [SerializeField] private bool isActivated = false;
     public IBeaconActivate beaconActivate;
     public GameObject door;

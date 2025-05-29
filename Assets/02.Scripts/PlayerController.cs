@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject rightClickUI; // 우클릭 UI 오브젝트 (인스펙터에서 할당, 오브젝트 정보를 표시하기 위한 UI)
 
     private bool isPaused = false;
+    private bool isPuzzleActive = false;
 
     private Rigidbody rb;
     private PlayerCondition playerCondition;
@@ -90,6 +91,7 @@ public class PlayerController : MonoBehaviour
 
     void CameraLook()
     {
+        if (isPuzzleActive) return; // 퍼즐 중엔 입력 무시
         if (isPaused) return; // 퍼즈 중 카메라 회전 무시
         camCurXRotation += mouseDelta.y * camSensitivity;
         camCurXRotation = Mathf.Clamp(camCurXRotation, minLookX, maxLookX);
@@ -100,6 +102,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (isPuzzleActive) return; // 퍼즐 중엔 입력 무시
         if (isPaused) return; // 퍼즈 중 입력 무시
         if (context.phase == InputActionPhase.Performed)
         {
@@ -135,12 +138,14 @@ public class PlayerController : MonoBehaviour
 
     public void OnLook(InputAction.CallbackContext context)
     {
+        if (isPuzzleActive) return; // 퍼즐 중엔 입력 무시
         if (isPaused) return; // 퍼즈 중 입력 무시
         mouseDelta = context.ReadValue<Vector2>();
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
+        if (isPuzzleActive) return; // 퍼즐 중엔 입력 무시
         if (isPaused) return; // 퍼즈 중 입력 무시
         if (context.phase == InputActionPhase.Performed)
         {
@@ -161,10 +166,11 @@ public class PlayerController : MonoBehaviour
     }
     public void OnLeftClick(InputAction.CallbackContext context)
     {
+        if (isPuzzleActive) return; // 퍼즐 중엔 입력 무시
         if (isPaused) return; // 퍼즈 중 입력 무시
         if (context.phase == InputActionPhase.Performed)
         {
-            if (heldItem != null)
+            if (heldItem != null)// 아이템을 들고 있는 상태일땐 우선적으로 아이템 내려놓기만 처리
             {
                 Collider itemCollider = heldItem.GetComponent<Collider>();
                 if (itemCollider != null)
@@ -172,7 +178,7 @@ public class PlayerController : MonoBehaviour
                     Vector3 dropPosition = heldItem.transform.position;// 아이템을 내려놓을 위치
                     Vector3 halfExtents = itemCollider.bounds.extents;// 아이템의 절반 크기
                     Quaternion orientation = heldItem.transform.rotation; // 아이템의 회전값
-                    int itemDropMask = ~LayerMask.GetMask("Player"); // Player 레이어만 제외
+                    int itemDropMask = ~LayerMask.GetMask("Player","Poison"); // Player 레이어만 제외
 
                     // 겹치는 오브젝트가 있으면 드랍 불가
                     if (Physics.CheckBox(dropPosition, halfExtents, orientation, itemDropMask))
@@ -196,7 +202,7 @@ public class PlayerController : MonoBehaviour
 
             // 카메라 중앙에서 Ray를 쏨, 픽업 아이템이 없을 때만 실행
             Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
-            int mask = ~LayerMask.GetMask("Player"); // 플레이어 레이어를 제외한 모든 레이어에 대해 Raycast
+            int mask = ~LayerMask.GetMask("Player","Poison"); // 플레이어 레이어를 제외한 모든 레이어에 대해 Raycast
             if (Physics.Raycast(ray, out RaycastHit hit, 10f, mask)) // 10f: 상호작용 거리
             {
                 // PickupableItem 컴포넌트가 있으면 픽업
@@ -204,6 +210,13 @@ public class PlayerController : MonoBehaviour
                 if (pickupable != null)
                 {
                     PickupItem(pickupable);
+                    return;
+                }
+                var puzzleInteractable = hit.collider.GetComponent<StartPuzzle>();
+                if (puzzleInteractable != null)
+                {
+                    isPuzzleActive = true; // 퍼즐 활성화 상태로 변경
+                    puzzleInteractable.LoadPuzzleScene(); // 퍼즐 시작
                     return;
                 }
                 //좌클릭 상호작용 아이템이 추가될떄마다 더 추가될 예정
@@ -236,6 +249,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnRightClick(InputAction.CallbackContext context)
     {
+        if (isPuzzleActive) return; // 퍼즐 중엔 입력 무시
         if (isPaused) return; // 퍼즈 중 입력 무시
         // 오브젝트가 구현되고 나서 구현 예정
     }
@@ -271,5 +285,10 @@ public class PlayerController : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void SetPuzzleActive(bool active)
+    {
+        isPuzzleActive = active;
     }
 }

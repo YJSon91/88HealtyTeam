@@ -5,8 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class StartPuzzle : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    public void LoadPuzzleScene()
     {
         SceneManager.LoadScene("PuzzleScene", LoadSceneMode.Additive);
+
     }
 }

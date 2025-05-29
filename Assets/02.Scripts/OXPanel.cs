@@ -11,12 +11,16 @@ public class OXPanel : MonoBehaviour
     {
         panelO.SetActive(true);
         panelX.SetActive(false);
+
+        SoundManager.Instance.PlaySFX("buttonPressSound");
     }
 
     public void ShowPanelX()
     {
         panelX.SetActive(true);
         panelO.SetActive(false);
+
+        SoundManager.Instance.PlaySFX("buttonPressSound");
     }
 
 }

@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 592176b46fb3ae24091dd2d46bfe718d, type: 3}
+  m_Script: {fileID: 11500000, guid: ff53619591cfee0479f52d91cf7923f5, type: 3}
   m_Name: PickupableItemA
   m_EditorClassIdentifier: 
-  itemID: 2d94eb72-2a1d-454f-99d9-541e7c419329
-  itemName: PickupableItemA
-  itemColor: 0
+  objectID: 59b96f2c-d1c7-40ca-80f1-bb7194a857fb
+  objectName: PickupableItemA
+  objectColor: 0
   description: "A\uD0C0\uC785 \uC544\uC774\uD15C"

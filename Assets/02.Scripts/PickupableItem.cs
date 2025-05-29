@@ -10,9 +10,9 @@ public enum ItemColor
     YELLOW,
 }
 
-public class PickupableItem : MonoBehaviour
+public class PickupableItem : MonoBehaviour, IInteractable
 {
-    public PickupableItemData itemData;
+    public ObjectData objectData;
 
     private Renderer renderer;
 
@@ -20,7 +20,7 @@ public class PickupableItem : MonoBehaviour
     {
         renderer = GetComponent<Renderer>();
 
-        renderer.material.color = ChangeColor(itemData.itemColor);
+        renderer.material.color = ChangeColor(objectData.objectColor);
     }
 
     /// <summary>
@@ -28,7 +28,7 @@ public class PickupableItem : MonoBehaviour
     /// </summary>
     public void OnPickup()
     {
-        Debug.Log($"Picked up: {itemData.itemName} (ID: {itemData.itemID})");
+        Debug.Log($"Picked up: {objectData.objectName} (ID: {objectData.objectID})");
     }
 
     /// <summary>
@@ -36,7 +36,7 @@ public class PickupableItem : MonoBehaviour
     /// </summary>
     public void OnPlace()
     {
-        Debug.Log($"Placed {itemData.itemName} on");
+        Debug.Log($"Placed {objectData.objectName} on");
     }
 
     // memo : Beacon의 ChangeColor코드와 중복이다. 상속받아서 쓰는 것이 나을 듯 한데..Item, 혹은 Object라는 클래스를 만들어 상속받는게 좋지 않을까?
@@ -55,5 +55,10 @@ public class PickupableItem : MonoBehaviour
             default:
                 return Color.white;
         }
+    }
+
+    public ObjectData GetInteractableInfo()
+    {
+        return objectData;
     }
 }

@@ -11,6 +11,8 @@ public class PlayerCondition : MonoBehaviour
     public float staminaDecreasePerSec = 20f;// 대시 시 초당 스태미나 감소량
     public float staminaRegenPerSec = 10f;// 스태미나 초당 회복량
 
+    private bool isEmergencyBGMPlaying = false;
+
     private PlayerController playerController;
 
     [SerializeField] private GameObject DieUI;
@@ -31,11 +33,25 @@ public class PlayerCondition : MonoBehaviour
     }
     void Update()
     {
-        if (!isDead && health<= 0)//health의 현재 값이 0 이하일 때
+        if (!isDead && health <= 0)
         {
-            Die();//죽음 처리 함수 호출
+            Die();
         }
-        //스태미나 변화량
+
+        //  체력이 30 이하일 때 긴급 BGM으로 전환
+        if (!isEmergencyBGMPlaying && health <= 30)
+        {
+            SoundManager.Instance.PlayStageBGM("Stage", true);
+            isEmergencyBGMPlaying = true;
+        }
+
+        // 체력이 31 이상으로 회복되면 일반 BGM으로 복귀 (선택 사항)
+        if (isEmergencyBGMPlaying && health > 30)
+        {
+            SoundManager.Instance.PlayStageBGM("Stage", false);
+            isEmergencyBGMPlaying = false;
+        }
+
         StaminaAmountOfChange();
     }
     void Die()

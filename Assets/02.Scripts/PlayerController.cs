@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using TMPro;
 
 public interface IInteractable
 {
@@ -290,5 +291,6 @@ public class PlayerController : MonoBehaviour
     public void SetPuzzleActive(bool active)
     {
         isPuzzleActive = active;
+        Cursor.lockState = active ? CursorLockMode.None : CursorLockMode.Locked;
     }
 }

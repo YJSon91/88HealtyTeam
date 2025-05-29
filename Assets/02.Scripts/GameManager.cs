@@ -1,79 +1,125 @@
 ﻿// GameManager.cs
 using UnityEngine;
+using System.Collections.Generic; // 나중에 List<PickupableItemState> 등 사용 대비
 
 public class GameManager : MonoBehaviour
 {
+    // --- 싱글턴 인스턴스 ---
     public static GameManager Instance;
 
-    public GameObject door1Object;
-    public GameObject door2Object;
-    public GameObject finalExitDoorObject;
+    // --- 문(Door) 오브젝트 참조 (Inspector에서 할당) ---
+    public GameObject door1Object;          // 첫 번째 퍼즐 해결 시 열리는 문
+    public GameObject door2Object;          // 비콘 활성화 시 열리는 문
+    public GameObject finalExitDoorObject;  // 스테이지 내 최종 버튼 클릭 시 열리는 문
 
-    // 상태 변수
-    private bool isGasRoomPuzzle1Solved = false; // 첫 번째 퍼즐 해결 여부
-    private bool isBeaconActivated = false;      // 비콘 활성화 여부
-    public bool isStage1EffectivelyCleared = false; // 로비 버튼 활성화 및 최종 문 개방 조건
-                                                    // (이전 isFinalButtonPressed의 역할 일부 + 로비버튼 활성화 트리거)
+    // --- 퍼즐 및 버튼 상태 변수 ---
+    private bool isGasRoomPuzzle1Solved = false; // 첫 번째 퍼즐 ("GasRoom_Puzzle1") 해결 상태
+    private bool isBeaconActivated = false;      // 비콘 활성화 상태
+    private bool isFinalButtonPressed = false;   // 스테이지 내 최종 버튼 눌림 상태
 
-    public LobbyButton stage1LobbyButtonIndicator; // 로비 버튼 역할의 시각적 오브젝트
+    // --- 스테이지 클리어 시각적 피드백 관련 (예: 이전 LobbyButton) ---
+    public bool isStage1EffectivelyCleared = false; // 스테이지의 실질적 클리어(최종 버튼 눌림)를 나타냄
+    public LobbyButton stage1LobbyButtonIndicator;   // 관련 UI 요소 참조 (필요 없다면 null로 두거나 제거)
 
-    public float stageTimeLimit = 180f;
+    // --- 스테이지 타이머 및 게임 오버 관련 변수 ---
+    public float stageTimeLimit = 180f; // 예: 3분 (Inspector에서 조절 가능)
     private float currentTimer;
     private bool isGameOver = false;
-    private bool isGamePaused = false;
+    private bool isGamePaused = false; // (선택적) 일시정지 기능용
 
     void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
-        InitializeStage();
+        if (Instance == null)
+        {
+            Instance = this;
+            // DontDestroyOnLoad(gameObject); // 단일 씬 구성에서는 필수는 아님
+        }
+        else
+        {
+            Destroy(gameObject);
+            return; // 중복 인스턴스 시 추가 초기화 방지
+        }
+
+        // InitializeStage(); // Start()에서 호출하여 다른 Awake()들이 먼저 실행될 여지를 줌
+    }
+
+    void Start()
+    {
+        InitializeStage();       // 먼저 기본값으로 스테이지 초기화
+        LoadAndApplyGameData();  // 그 다음 저장된 플레이어 데이터 불러와서 덮어쓰기
     }
 
     void InitializeStage()
     {
+        // 문 초기 상태: 모두 닫힘 (활성화)
         if (door1Object != null) door1Object.SetActive(true);
         if (door2Object != null) door2Object.SetActive(true);
         if (finalExitDoorObject != null) finalExitDoorObject.SetActive(true);
 
+        // 상태 변수 초기화 (로드 전 기본 상태)
         isGasRoomPuzzle1Solved = false;
         isBeaconActivated = false;
-        isStage1EffectivelyCleared = false; // 초기화
+        isFinalButtonPressed = false;
+        isStage1EffectivelyCleared = false;
 
+        // 타이머 초기화 및 시작
         currentTimer = stageTimeLimit;
         isGameOver = false;
+        isGamePaused = false; // 일시정지 상태 초기화
         Debug.Log("GameManager: 스테이지 초기화 완료. 타이머 시작!");
-        UpdateLobbyButtonVisualState(); // 로비 버튼 초기 상태 업데이트
+
+        UpdateLobbyButtonIndicatorVisuals(); // 시각적 피드백 요소 초기화
     }
 
     void Update()
     {
-        if (isGameOver || isGamePaused) return;
+        if (isGameOver || isGamePaused) // 게임오버 또는 일시정지 시 업데이트 중단
+            return;
 
+        // 타이머 업데이트
         if (currentTimer > 0)
         {
             currentTimer -= Time.deltaTime;
-            // UIManager.Instance.UpdateTimerUI(currentTimer);
+            // TODO: UI 시스템 담당에게 currentTimer 값을 전달하여 UI에 표시하도록 요청
+            // if (UIManager.Instance != null) UIManager.Instance.UpdateTimerUI(currentTimer);
         }
-        else if (!isGameOver)
+        else if (!isGameOver) // 타이머 0 되면 게임 오버 (isGameOver 플래그로 중복 호출 방지)
         {
             currentTimer = 0;
-            // UIManager.Instance.UpdateTimerUI(currentTimer);
+            // if (UIManager.Instance != null) UIManager.Instance.UpdateTimerUI(currentTimer);
             GameOver("시간 초과!");
         }
+
+        // (선택적) 테스트용 저장/로드 키 (프로토타입 단계에서 유용)
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            SaveCurrentGameData();
+        }
+        if (Input.GetKeyDown(KeyCode.F9))
+        {
+            // 로드 후에는 보통 씬을 재시작하거나 상태를 완벽히 재구성해야 함
+            // 여기서는 플레이어 상태만 로드하므로, 현재 스테이지 진행상황은 초기화되지 않음.
+            // 게임 시작 시 로드하는 것이 일반적. 테스트용도로만 사용.
+            LoadAndApplyGameData();
+        }
     }
+
+    // --- 외부(퍼즐/아이템/플레이어 스크립트)에서 호출될 함수들 ---
 
     public void PuzzleSolved(string puzzleID)
     {
         if (isGameOver) return;
-        if (puzzleID == "GasRoom_Puzzle1" && !isGasRoomPuzzle1Solved) // ID를 "GasRoom_Puzzle1"로 가정
+
+        if (puzzleID == "GasRoom_Puzzle1" && !isGasRoomPuzzle1Solved)
         {
             isGasRoomPuzzle1Solved = true;
             Debug.Log("GameManager: GasRoom_Puzzle1 해결됨! Door1을 엽니다.");
             if (door1Object != null)
             {
-                door1Object.SetActive(false);
-                SoundManager.Instance.PlayDoorOpenSound();
+                door1Object.SetActive(false); // Door1 열기
+                if (SoundManager.Instance != null) SoundManager.Instance.PlayDoorOpenSound();
             }
+            // SaveCurrentGameData(); // 주요 진행 상황 변경 시 저장 (선택적)
         }
     }
 
@@ -86,13 +132,10 @@ public class GameManager : MonoBehaviour
             Debug.Log("GameManager: 비콘 활성화됨! Door2를 엽니다.");
             if (door2Object != null)
             {
-                door2Object.SetActive(false);
-                SoundManager.Instance.PlayDoorOpenSound();
+                door2Object.SetActive(false); // Door2 열기
+                if (SoundManager.Instance != null) SoundManager.Instance.PlayDoorOpenSound();
             }
-            // ★ 비콘 활성화 시, isStage1EffectivelyCleared를 true로 설정
-            isStage1EffectivelyCleared = true;
-            Debug.Log("GameManager: isStage1EffectivelyCleared 상태가 true로 변경됨 (로비 버튼 활성화 조건 충족).");
-            UpdateLobbyButtonVisualState(); // 로비 버튼 시각적 업데이트 요청
+            // SaveCurrentGameData(); // 주요 진행 상황 변경 시 저장 (선택적)
         }
         else if (!isGasRoomPuzzle1Solved)
         {
@@ -100,36 +143,27 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // LobbyButton에서 클릭 시 호출될 새로운 함수
-    public void OnLobbyButtonClick()
-    {
-        if (isGameOver) return;
-        Debug.Log("GameManager: 로비 버튼 클릭됨.");
-
-        if (isStage1EffectivelyCleared) // 비콘까지 활성화되어 로비 버튼이 활성화된 상태라면
-        {
-            Debug.Log("GameManager: 로비 버튼 조건 충족! FinalExitDoor를 엽니다.");
-            if (finalExitDoorObject != null)
-            {
-                finalExitDoorObject.SetActive(false);
-                SoundManager.Instance.PlayDoorOpenSound();
-            }
-            GameClear(); // 게임 클리어 처리
-        }
-        else
-        {
-            Debug.LogWarning("GameManager: 로비 버튼 클릭 - 아직 조건이 충족되지 않음 (isStage1EffectivelyCleared is false).");
-        }
-    }
-
-    // ReportFinalStageButtonPressed 함수는 OnLobbyButtonClick으로 대체되었으므로 주석 처리 또는 삭제 가능
-    /*
     public void ReportFinalStageButtonPressed()
     {
-        // ... 기존 로직 ...
-        // 이 함수를 호출하던 "스테이지 내 최종 버튼" 오브젝트는 이제 필요 없을 수 있습니다.
+        if (isGameOver) return;
+        if (isBeaconActivated && !isFinalButtonPressed)
+        {
+            isFinalButtonPressed = true;
+            isStage1EffectivelyCleared = true;
+            Debug.Log("GameManager: 스테이지 내 최종 버튼 눌림! FinalExitDoor를 엽니다.");
+
+            if (finalExitDoorObject != null)
+            {
+                finalExitDoorObject.SetActive(false); // FinalExitDoor 열기
+                if (SoundManager.Instance != null) SoundManager.Instance.PlayDoorOpenSound();
+            }
+            GameClear();
+        }
+        else if (!isBeaconActivated)
+        {
+            Debug.LogWarning("GameManager: 최종 버튼 누름 시도 - 아직 비콘이 활성화되지 않음!");
+        }
     }
-    */
 
     public void ReportPlayerDeath()
     {
@@ -137,31 +171,134 @@ public class GameManager : MonoBehaviour
         GameOver("플레이어 사망!");
     }
 
+    // --- 게임 상태 변경 함수 ---
     private void GameClear()
     {
         isGameOver = true;
         Debug.Log("GameManager: 스테이지 클리어!");
-        // UIManager.Instance.ShowStageClearUI();
-        // UpdateLobbyButtonIndicator(); // 이 함수는 UpdateLobbyButtonVisualState로 대체되거나 통합될 수 있음
+        // TODO: UI 시스템 담당에게 클리어 UI 표시 요청
+        // if (UIManager.Instance != null) UIManager.Instance.ShowStageClearUI();
+        UpdateLobbyButtonIndicatorVisuals();
+        SaveCurrentGameData(); // 게임 클리어 시 최종 상태 저장
     }
 
     private void GameOver(string reason)
     {
         isGameOver = true;
         Debug.Log($"GameManager: 게임 오버! 사유: {reason}");
-        // UIManager.Instance.ShowGameOverUI(reason);
-        // Time.timeScale = 0;
+        // TODO: UI 시스템 담당에게 게임오버 UI 표시 요청
+        // if (UIManager.Instance != null) UIManager.Instance.ShowGameOverUI(reason);
+        // Time.timeScale = 0f; // 게임 시간을 멈춤 (선택적)
     }
 
-    // 로비 버튼의 시각적 상태를 업데이트하는 함수 (LobbyButton 스크립트에서 직접 참조할 수도 있음)
-    public void UpdateLobbyButtonVisualState()
+    // --- (선택적) 로비 버튼 인디케이터 시각적 업데이트 ---
+    private void UpdateLobbyButtonIndicatorVisuals()
     {
         if (stage1LobbyButtonIndicator != null)
         {
-            // LobbyButton 스크립트에 SetClearedStatus 같은 함수를 만들어서 호출하거나,
-            // LobbyButton이 GameManager의 isStage1EffectivelyCleared를 직접 읽도록 할 수 있습니다.
-            // 여기서는 LobbyButton이 isStage1EffectivelyCleared를 읽는다고 가정하고 Debug.Log만 남깁니다.
-            Debug.Log("GameManager: LobbyButton 시각적 상태 업데이트 필요 (isStage1EffectivelyCleared: " + isStage1EffectivelyCleared + ")");
+            // LobbyButton 스크립트가 isStage1EffectivelyCleared 값을 직접 참조하여 자신의 상태를 업데이트한다고 가정
+            // 또는 여기서 stage1LobbyButtonIndicator.UpdateVisuals(isStage1EffectivelyCleared); 같은 함수 호출
+            Debug.Log("GameManager: 로비 버튼 인디케이터 시각적 업데이트 필요 (isStage1EffectivelyCleared: " + isStage1EffectivelyCleared + ")");
         }
+    }
+
+    // --- 세이브/로드 관련 함수 (현재 플레이어 정보 위주) ---
+    public void SaveCurrentGameData()
+    {
+        if (GameSaveManager.Instance == null)
+        {
+            Debug.LogError("GameSaveManager.Instance is null. Cannot save game data.");
+            return;
+        }
+        if (CharacterManager.Instance == null || CharacterManager.Instance.Player == null)
+        {
+            Debug.LogError("CharacterManager or Player not found. Cannot save game data.");
+            return;
+        }
+
+        GameData dataToSave = new GameData();
+        Player player = CharacterManager.Instance.Player;
+
+        // 플레이어 정보 저장
+        dataToSave.playerPosition = player.transform.position;
+        dataToSave.playerRotation = player.transform.rotation;
+        if (player.condition != null)
+        {
+            dataToSave.playerHealth = player.condition.health;
+            dataToSave.playerStamina = player.condition.Stamina;
+        }
+
+        // --- 향후 확장: 현재는 주석 처리된 게임 진행 상태 저장 ---
+        // dataToSave.gasRoomPuzzle1Solved = this.isGasRoomPuzzle1Solved;
+        // dataToSave.beaconActivated = this.isBeaconActivated;
+        // dataToSave.finalButtonPressed = this.isFinalButtonPressed;
+        // dataToSave.currentTimer = this.currentTimer;
+        // if (PuzzleManager.Instance != null) dataToSave.lightsOutPuzzleCleared = PuzzleManager.Instance.CheckPuzzleClear();
+        // dataToSave.itemStates = CollectItemStates(); // 아이템 상태 수집 함수 별도 구현 필요 (복잡)
+
+        GameSaveManager.Instance.SaveGame(dataToSave);
+    }
+
+    public void LoadAndApplyGameData()
+    {
+        if (GameSaveManager.Instance == null)
+        {
+            Debug.LogError("GameSaveManager.Instance is null. Cannot load game data.");
+            return;
+        }
+
+        GameData loadedData = GameSaveManager.Instance.LoadGame();
+
+        // 플레이어 정보 복원
+        if (CharacterManager.Instance != null && CharacterManager.Instance.Player != null)
+        {
+            Player player = CharacterManager.Instance.Player;
+            CharacterController cc = player.GetComponent<CharacterController>();
+
+            if (cc != null && cc.enabled) cc.enabled = false;
+            player.transform.position = loadedData.playerPosition;
+            player.transform.rotation = loadedData.playerRotation;
+            if (cc != null) cc.enabled = true;
+
+            if (player.condition != null)
+            {
+                player.condition.health = loadedData.playerHealth;
+                player.condition.Stamina = loadedData.playerStamina;
+                // TODO: UI에도 반영 필요 (UIManager 호출)
+            }
+        }
+        else
+        {
+            Debug.LogWarning("CharacterManager or Player not found. Cannot apply loaded player state.");
+            return; // 플레이어가 없으면 아래 상태 복원 의미 없음
+        }
+
+
+        // --- 향후 확장: 현재는 주석 처리된 게임 진행 상태 복원 ---
+        // this.isGasRoomPuzzle1Solved = loadedData.gasRoomPuzzle1Solved;
+        // this.isBeaconActivated = loadedData.beaconActivated;
+        // this.isFinalButtonPressed = loadedData.finalButtonPressed;
+        // this.currentTimer = loadedData.currentTimer;
+        // if (PuzzleManager.Instance != null && loadedData.lightsOutPuzzleCleared) { /* PuzzleManager 상태 복원 */ }
+        // ApplyItemStates(loadedData.itemStates); // 아이템 상태 복원 함수 별도 구현 필요 (복잡)
+
+        // ApplyVisualStatesFromLoadedData(); // 문 상태 등 시각적 업데이트 (이것도 퍼즐 상태 저장 시 함께)
+        Debug.Log("GameManager: Loaded game data (player focus) and applied to player.");
+        // UpdateLobbyButtonIndicatorVisuals(); // 로드 후 시각적 피드백 요소도 업데이트
+    }
+
+    /* // 문 상태 등 시각적 업데이트 함수 (나중에 퍼즐/진행 상태 저장 시 활성화)
+    private void ApplyVisualStatesFromLoadedData()
+    {
+        if (door1Object != null) door1Object.SetActive(!isGasRoomPuzzle1Solved);
+        if (door2Object != null) door2Object.SetActive(!(isGasRoomPuzzle1Solved && isBeaconActivated));
+        if (finalExitDoorObject != null) finalExitDoorObject.SetActive(!(isBeaconActivated && isFinalButtonPressed));
+        UpdateLobbyButtonIndicatorVisuals();
+    }
+    */
+
+    void OnApplicationQuit()
+    {
+        // SaveCurrentGameData(); // 게임 종료 시 자동 저장 (선택적)
     }
 }

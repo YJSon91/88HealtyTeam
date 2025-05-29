@@ -76,19 +76,24 @@ public class PlayerController : MonoBehaviour
     {
         bool isGrounded = IsGrounded();
         bool isMoving = curMovementInput.magnitude > 0.1f;
-        bool isRunning = isDashing;  // ← 이제 달리기 판정은 대시 여부로
+        bool isRunning = isDashing;
 
         if (isGrounded && isMoving && !footstepCooldown)
         {
             SoundManager.Instance.PlayPlayerFootstep(isRunning);
             StartCoroutine(FootstepCooldown(isRunning));
         }
+        else if (!isMoving || !isGrounded)
+        {
+            // 움직임이 멈췄거나 땅 위에 없으면 사운드 멈춤
+            SoundManager.Instance.StopFootstep();
+        }
     }
 
     IEnumerator FootstepCooldown(bool isRunning)
     {
         footstepCooldown = true;
-        yield return new WaitForSeconds(isRunning ? 0.3f : 0.5f); // 달릴 땐 짧게
+        yield return new WaitForSeconds(isRunning ? 0.3f : 0.5f);
         footstepCooldown = false;
     }
 

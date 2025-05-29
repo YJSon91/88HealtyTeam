@@ -107,4 +107,12 @@ public class SoundManager : MonoBehaviour
     {
         sfxSource.PlayOneShot(jumpSound);
     }
+
+    public void StopFootstep()
+    {
+        if (footstepSource.isPlaying)
+        {
+            footstepSource.Stop();
+        }
+    }
 }

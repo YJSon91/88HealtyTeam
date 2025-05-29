@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour
     private IInteractable interactable; // 상호작용 가능한 오브젝트를 저장할 변수
 
     private bool footstepCooldown = false;
+    private Coroutine footstepCoroutine;
 
     private void Awake()
     {
@@ -76,25 +77,33 @@ public class PlayerController : MonoBehaviour
     {
         bool isGrounded = IsGrounded();
         bool isMoving = curMovementInput.magnitude > 0.1f;
-        bool isRunning = isDashing;
 
-        if (isGrounded && isMoving && !footstepCooldown)
+        // 조건이 만족되면 반복적으로 발소리 재생 시작
+        if (isGrounded && isMoving && footstepCoroutine == null)
         {
-            SoundManager.Instance.PlayPlayerFootstep(isRunning);
-            StartCoroutine(FootstepCooldown(isRunning));
+            footstepCoroutine = StartCoroutine(PlayFootstepsRepeatedly());
         }
-        else if (!isMoving || !isGrounded)
+
+        // 멈췄거나 땅에 없으면 코루틴 중단
+        if (!isGrounded || !isMoving)
         {
-            // 움직임이 멈췄거나 땅 위에 없으면 사운드 멈춤
-            SoundManager.Instance.StopFootstep();
+            if (footstepCoroutine != null)
+            {
+                StopCoroutine(footstepCoroutine);
+                footstepCoroutine = null;
+            }
         }
     }
 
-    IEnumerator FootstepCooldown(bool isRunning)
+    IEnumerator PlayFootstepsRepeatedly()
     {
-        footstepCooldown = true;
-        yield return new WaitForSeconds(isRunning ? 0.3f : 0.5f);
-        footstepCooldown = false;
+        while (true)
+        {
+            bool isRunning = isDashing;
+            SoundManager.Instance.PlayPlayerFootstep(isRunning);
+
+            yield return new WaitForSeconds(isRunning ? 0.3f : 0.5f);
+        }
     }
 
     void FixedUpdate()

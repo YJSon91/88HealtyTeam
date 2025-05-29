@@ -80,12 +80,8 @@ public class SoundManager : MonoBehaviour
 
     public void PlayPlayerFootstep(bool isRunning)
     {
-        AudioClip clip = isRunning ? footstepRun : footstepWalk;        // 걷는 중이면 footstepWalk, 뛰는 중이면 footstepRun 재생
-        footstepSource.clip = clip;
-        if (!footstepSource.isPlaying)                                  // 중복 재생 방지를 위해 isPlaying 체크
-        {
-            footstepSource.Play();
-        }
+        AudioClip clip = isRunning ? footstepRun : footstepWalk;
+        sfxSource.PlayOneShot(clip);
     }
 
     public void PlayDamageSound()

@@ -16,6 +16,8 @@ public class Door : MonoBehaviour, IBeaconActivate
     {
         gameObject.SetActive(false);
         oxPanel.ShowPanelO();
+
+        SoundManager.Instance.PlaySFX("doorOpenSound");
     }
     public void DeactivateBeacon()
     {

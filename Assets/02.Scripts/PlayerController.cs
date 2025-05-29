@@ -167,9 +167,9 @@ public class PlayerController : MonoBehaviour
                 Collider itemCollider = heldItem.GetComponent<Collider>();
                 if (itemCollider != null)
                 {
-                    Vector3 dropPosition = heldItem.transform.position;
-                    Vector3 halfExtents = itemCollider.bounds.extents;
-                    Quaternion orientation = heldItem.transform.rotation;
+                    Vector3 dropPosition = heldItem.transform.position;// 아이템을 내려놓을 위치
+                    Vector3 halfExtents = itemCollider.bounds.extents;// 아이템의 절반 크기
+                    Quaternion orientation = heldItem.transform.rotation; // 아이템의 회전값
                     int itemDropMask = ~LayerMask.GetMask("Player"); // Player 레이어만 제외
 
                     // 겹치는 오브젝트가 있으면 드랍 불가

@@ -15,10 +15,10 @@ public class PlayerCondition : MonoBehaviour
     private bool isLowHpWarningActive = false;
 
     private PlayerController playerController;
+    public UICondition uiCondition;
 
     [SerializeField] private GameObject DieUI;
     private bool isDead = false;
-
 
     public event Action onTakeDamage;//피해를 입었을 때 발생하는 델리게이트 이벤트
 

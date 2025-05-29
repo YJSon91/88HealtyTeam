@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
             if (door2Object != null)
             {
                 door2Object.SetActive(false);
-                //SoundManager.Instance.PlayDoorOpenSound();
+                SoundManager.Instance.PlayDoorOpenSound();
             }
             // ★ 비콘 활성화 시, isStage1EffectivelyCleared를 true로 설정
             isStage1EffectivelyCleared = true;
@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
             if (finalExitDoorObject != null)
             {
                 finalExitDoorObject.SetActive(false);
-               // SoundManager.Instance.PlayDoorOpenSound();
+                SoundManager.Instance.PlayDoorOpenSound();
             }
             GameClear(); // 게임 클리어 처리
         }

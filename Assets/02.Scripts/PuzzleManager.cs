@@ -93,6 +93,8 @@ public class PuzzleManager : MonoBehaviour
         {
             puzzles[i, j].isLightON = !puzzles[i, j].isLightON;
         }
+
+        SoundManager.Instance.PlaySFX("buttonPressSound");
     }
 
 

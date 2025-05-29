@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
         {
             currentTimer = 0;
             // TODO: UI 시스템 담당에게 currentTimer 값 전달
-            // UIManager.Instance.UpdateTimerUI(currentTimer);
+            //UIManager.Instance.UpdateTimerUI(currentTimer);
             GameOver("시간 초과!");
         }
 
@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
             {
                 door1Object.SetActive(false); // Door1 열기
                 // TODO: 사운드 담당에게 문 열리는 소리 재생 요청
-                // SoundManager.Instance.PlayDoorOpenSound();
+                SoundManager.Instance.PlayDoorOpenSound();
             }
         }
         // else if (puzzleID == "AnotherPuzzle" && !isAnotherPuzzleSolved) { ... } // 나중에 다른 퍼즐 추가 시
@@ -120,6 +120,7 @@ public class GameManager : MonoBehaviour
             {
                 door2Object.SetActive(false); // Door2 열기
                 // TODO: 사운드 담당에게 문 열리는 소리 재생 요청
+                SoundManager.Instance.PlayDoorOpenSound();
             }
         }
         else if (!isPuzzleSolved)
@@ -143,10 +144,11 @@ public class GameManager : MonoBehaviour
             {
                 finalExitDoorObject.SetActive(false); // FinalExitDoor 열기
                 // TODO: 사운드 담당에게 문 열리는 소리 재생 요청
+                SoundManager.Instance.PlayDoorOpenSound();
             }
 
             // 게임 클리어 처리
-            GameClear();
+            //GameClear();
         }
         else if (!isBeaconActivated)
         {

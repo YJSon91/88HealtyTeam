@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     // --- 스테이지 클리어 시각적 피드백 관련 (예: 이전 LobbyButton) ---
     public bool isStage1EffectivelyCleared = false; // 스테이지의 실질적 클리어(최종 버튼 눌림)를 나타냄
-    public LobbyButton stage1LobbyButtonIndicator;   // 관련 UI 요소 참조 (필요 없다면 null로 두거나 제거)
+    
 
     // --- 스테이지 타이머 및 게임 오버 관련 변수 ---
     public float stageTimeLimit = 180f; // 예: 3분 (Inspector에서 조절 가능)
@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
         isGamePaused = false; // 일시정지 상태 초기화
         Debug.Log("GameManager: 스테이지 초기화 완료. 타이머 시작!");
 
-        UpdateLobbyButtonIndicatorVisuals(); // 시각적 피드백 요소 초기화
+      
     }
 
     void Update()
@@ -178,7 +178,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("GameManager: 스테이지 클리어!");
         // TODO: UI 시스템 담당에게 클리어 UI 표시 요청
         // if (UIManager.Instance != null) UIManager.Instance.ShowStageClearUI();
-        UpdateLobbyButtonIndicatorVisuals();
+        
         SaveCurrentGameData(); // 게임 클리어 시 최종 상태 저장
     }
 
@@ -191,16 +191,7 @@ public class GameManager : MonoBehaviour
         // Time.timeScale = 0f; // 게임 시간을 멈춤 (선택적)
     }
 
-    // --- (선택적) 로비 버튼 인디케이터 시각적 업데이트 ---
-    private void UpdateLobbyButtonIndicatorVisuals()
-    {
-        if (stage1LobbyButtonIndicator != null)
-        {
-            // LobbyButton 스크립트가 isStage1EffectivelyCleared 값을 직접 참조하여 자신의 상태를 업데이트한다고 가정
-            // 또는 여기서 stage1LobbyButtonIndicator.UpdateVisuals(isStage1EffectivelyCleared); 같은 함수 호출
-            Debug.Log("GameManager: 로비 버튼 인디케이터 시각적 업데이트 필요 (isStage1EffectivelyCleared: " + isStage1EffectivelyCleared + ")");
-        }
-    }
+      
 
     // --- 세이브/로드 관련 함수 (현재 플레이어 정보 위주) ---
     public void SaveCurrentGameData()

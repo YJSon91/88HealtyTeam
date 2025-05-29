@@ -4,7 +4,7 @@ using System.Collections;
 
 public interface IInteractable //오브젝트 상호작용은 구현하시는 분들이 해당 인터페이스를 오브젝트의 스크립트에 상속받아서 만들어야 해요.
 {
-    void OnInteract();
+
 }
 
 public class PlayerController : MonoBehaviour

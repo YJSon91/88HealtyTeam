@@ -8,7 +8,7 @@ public class PlaySoundOnCollision : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Beacon") || collision.contacts.Length > 0)
+        if (collision.gameObject.CompareTag("Beacon"))
         {
             SoundManager.Instance.PlaySFX(sfxName);
         }

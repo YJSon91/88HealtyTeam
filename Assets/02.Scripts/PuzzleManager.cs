@@ -126,14 +126,17 @@ public class PuzzleManager : MonoBehaviour
     public void ClearedPuzzle() // 퍼즐을 클리어하면 문이 열리는 메서드
     {
         isClear = true;
+        GameManager.Instance.PuzzleSolved("GasRoom_Puzzle1"); // 퍼즐 클리어 상태를 GameManager에 알림
         door = GameManager.Instance.door1Object.GetComponent<Door>();
         door.ActivateBeacon();
+        CharacterManager.Instance.Player.controller.SetPuzzleActive(false);
         SceneManager.UnloadSceneAsync("PuzzleScene");
         Debug.Log("퍼즐 클리어! 문이 열립니다.");
     }
 
     public void GoBack()
     {
+        CharacterManager.Instance.Player.controller.SetPuzzleActive(false);
         SceneManager.UnloadSceneAsync("PuzzleScene");
     }
 

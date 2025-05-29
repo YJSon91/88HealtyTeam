@@ -50,14 +50,16 @@ MonoBehaviour:
   bgmSource: {fileID: 4782323305424101358}
   sfxSource: {fileID: 9136499674260851760}
   footstepSource: {fileID: 6190851678358022385}
-  lobbyBGM: {fileID: 8300000, guid: e11a3f731847f0448845ec6c60b679ba, type: 3}
+  lobbyBGM: {fileID: 8300000, guid: 49cf28a816c9a364dbeb824f5b011bb0, type: 3}
   stageBGM_Normal: {fileID: 8300000, guid: 750f11b9337156c41abe1b09b4098dee, type: 3}
-  stageBGM_Emergency: {fileID: 0}
-  damageSound: {fileID: 0}
-  buttonPressSound: {fileID: 0}
-  doorOpenSound: {fileID: 0}
-  footstepWalk: {fileID: 8300000, guid: 263f8aaa01d5d0041b082b7b69d9ca02, type: 3}
+  stageBGM_Emergency: {fileID: 8300000, guid: 78f7eb9a24fc1b345b435a72be64246e, type: 3}
+  damageSound: {fileID: 8300000, guid: ebd809eabbe09a34eb95be6be4ddbf0d, type: 3}
+  buttonPressSound: {fileID: 8300000, guid: 45a34f4978bc3814180377d76f1f96e0, type: 3}
+  doorOpenSound: {fileID: 8300000, guid: e8c34119dcbd9134f986e67e8cabae9d, type: 3}
+  footstepWalk: {fileID: 8300000, guid: 9479dd4619442ec47a1f424add8230d5, type: 3}
   footstepRun: {fileID: 8300000, guid: b094fecb8fdb976409a8cf8906519f7b, type: 3}
+  jumpSound: {fileID: 8300000, guid: e6d482a372fcda04399415614d6d9351, type: 3}
+  stageSuccessBGM: {fileID: 8300000, guid: 188f031cdef4db24ea1d535a0c852f15, type: 3}
 --- !u!82 &4782323305424101358
 AudioSource:
   m_ObjectHideFlags: 0
@@ -68,7 +70,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e11a3f731847f0448845ec6c60b679ba, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -260,7 +262,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 263f8aaa01d5d0041b082b7b69d9ca02, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

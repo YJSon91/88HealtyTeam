@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BGMZoneTrigger : MonoBehaviour
 {
-    public enum BGMType { Lobby, StageNormal, StageEmergency }
+    public enum BGMType { Lobby, StageNormal, StageEmergency, StageSuccess}
     public BGMType bgmType;
 
     private void OnTriggerEnter(Collider other)
@@ -21,6 +21,9 @@ public class BGMZoneTrigger : MonoBehaviour
                     break;
                 case BGMType.StageEmergency:
                     SoundManager.Instance.PlayStageBGM("Stage", true);
+                    break;
+                case BGMType.StageSuccess:
+                    SoundManager.Instance.PlayStageSuccessBGM();
                     break;
             }
         }

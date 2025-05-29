@@ -128,12 +128,14 @@ public class PuzzleManager : MonoBehaviour
         isClear = true;
         door = GameManager.Instance.door1Object.GetComponent<Door>();
         door.ActivateBeacon();
+        CharacterManager.Instance.Player.controller.SetPuzzleActive(false);
         SceneManager.UnloadSceneAsync("PuzzleScene");
         Debug.Log("퍼즐 클리어! 문이 열립니다.");
     }
 
     public void GoBack()
     {
+        CharacterManager.Instance.Player.controller.SetPuzzleActive(false);
         SceneManager.UnloadSceneAsync("PuzzleScene");
     }
 

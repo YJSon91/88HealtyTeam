@@ -11,7 +11,8 @@ public class PlayerCondition : MonoBehaviour
     public float staminaDecreasePerSec = 20f;// 대시 시 초당 스태미나 감소량
     public float staminaRegenPerSec = 10f;// 스태미나 초당 회복량
 
-    private bool isEmergencyBGMPlaying = false;
+    private Coroutine lowHpWarningCoroutine;
+    private bool isLowHpWarningActive = false;
 
     private PlayerController playerController;
 
@@ -38,21 +39,35 @@ public class PlayerCondition : MonoBehaviour
             Die();
         }
 
-        //  체력이 30 이하일 때 긴급 BGM으로 전환
-        if (!isEmergencyBGMPlaying && health <= 30)
+        // 체력이 30 이하이면 반복적으로 대미지 사운드 재생 시작
+        if (health <= 30 && !isLowHpWarningActive)
         {
-            SoundManager.Instance.PlayStageBGM("Stage", true);
-            isEmergencyBGMPlaying = true;
+            lowHpWarningCoroutine = StartCoroutine(PlayLowHpWarning());
+            isLowHpWarningActive = true;
+
+            SoundManager.Instance.SetBGMVolume(0.3f);
         }
 
-        // 체력이 31 이상으로 회복되면 일반 BGM으로 복귀 (선택 사항)
-        if (isEmergencyBGMPlaying && health > 30)
+        // 체력이 31 이상으로 회복되면 중단
+        if (health > 30 && isLowHpWarningActive)
         {
-            SoundManager.Instance.PlayStageBGM("Stage", false);
-            isEmergencyBGMPlaying = false;
+            if (lowHpWarningCoroutine != null)
+                StopCoroutine(lowHpWarningCoroutine);
+
+            isLowHpWarningActive = false;
+
+            SoundManager.Instance.SetBGMVolume(1f);
         }
 
         StaminaAmountOfChange();
+    }
+    IEnumerator PlayLowHpWarning()
+    {
+        while (true)
+        {
+            SoundManager.Instance.PlayDamageSound(); // 계속 반복적으로 대미지 사운드 재생
+            yield return new WaitForSeconds(1.5f); // 1.5초 간격 (원하면 더 짧게/길게 조절 가능)
+        }
     }
     void Die()
     {

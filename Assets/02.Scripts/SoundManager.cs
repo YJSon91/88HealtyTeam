@@ -111,4 +111,9 @@ public class SoundManager : MonoBehaviour
             footstepSource.Stop();
         }
     }
+
+    public void SetBGMVolume(float volume)
+    {
+        bgmSource.volume = Mathf.Clamp01(volume); // 0.0 ~ 1.0 사이로 제한
+    }
 }

@@ -54,6 +54,8 @@ public class PlayerController : MonoBehaviour
 
     private IInteractable interactable; // 상호작용 가능한 오브젝트를 저장할 변수
 
+    private bool footstepCooldown = false;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -65,6 +67,31 @@ public class PlayerController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
     }
+    void Update()
+    {
+        HandleFootstepSound();
+    }
+
+    void HandleFootstepSound()
+    {
+        bool isGrounded = IsGrounded();
+        bool isMoving = curMovementInput.magnitude > 0.1f;
+        bool isRunning = isDashing;  // ← 이제 달리기 판정은 대시 여부로
+
+        if (isGrounded && isMoving && !footstepCooldown)
+        {
+            SoundManager.Instance.PlayPlayerFootstep(isRunning);
+            StartCoroutine(FootstepCooldown(isRunning));
+        }
+    }
+
+    IEnumerator FootstepCooldown(bool isRunning)
+    {
+        footstepCooldown = true;
+        yield return new WaitForSeconds(isRunning ? 0.3f : 0.5f); // 달릴 땐 짧게
+        footstepCooldown = false;
+    }
+
     void FixedUpdate()
     {
         Move();

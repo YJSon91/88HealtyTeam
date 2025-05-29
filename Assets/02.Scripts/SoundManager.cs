@@ -22,6 +22,8 @@ public class SoundManager : MonoBehaviour
     public AudioClip footstepRun;
     public AudioClip jumpSound;
 
+    private string currentBGM = "";
+
     void Awake()
     {
         if (Instance == null)
@@ -37,16 +39,20 @@ public class SoundManager : MonoBehaviour
 
     public void PlayStageBGM(string stageName, bool isEmergency)
     {
-        bgmSource.clip = isEmergency ? stageBGM_Emergency : stageBGM_Normal;  // isEmergency가 true면 긴박한 BGM, 아니면 일반 BGM 재생
+        bgmSource.clip = isEmergency ? stageBGM_Emergency : stageBGM_Normal;
         bgmSource.Play();
     }
 
     public void PlayLobbyBGM()
     {
+        if (currentBGM == "Lobby") return;
+
         bgmSource.clip = lobbyBGM;
         bgmSource.loop = true;
         bgmSource.volume = 1f;
         bgmSource.Play();
+
+        currentBGM = "Lobby";
     }
 
     public void PlaySFX(string sfxName)  

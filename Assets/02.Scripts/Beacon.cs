@@ -82,6 +82,7 @@ public class Beacon : MonoBehaviour, IInteractable
         if (isActivated && beaconActivate != null)
         {
             beaconActivate.ActivateBeacon();
+            GameManager.Instance.ReportBeaconActivated();
         }
         else
         {

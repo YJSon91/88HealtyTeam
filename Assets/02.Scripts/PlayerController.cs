@@ -249,6 +249,12 @@ public class PlayerController : MonoBehaviour
                     puzzleInteractable.LoadPuzzleScene(); // 퍼즐 시작
                     return;
                 }
+                var exitButton = hit.collider.GetComponent<ExitDoorButton>();
+                if (exitButton != null)
+                {
+                    exitButton.TriggerExitDoor();
+                    return;
+                }
                 //좌클릭 상호작용 아이템이 추가될떄마다 더 추가될 예정
             }
         }

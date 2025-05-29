@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 7587525472609840669}
   - component: {fileID: 975128801615436388}
   - component: {fileID: 953779558793942280}
+  - component: {fileID: 5586483746971181556}
   - component: {fileID: 6657963497448078868}
   - component: {fileID: 7005060446008178983}
   - component: {fileID: 637190120033781337}
@@ -212,6 +213,29 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.85, z: 0}
+--- !u!136 &5586483746971181556
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6128261400810528951}
+  m_Material: {fileID: 13400000, guid: 216fea2c89279554ba671ed2de893a8a, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6657963497448078868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -381,7 +405,7 @@ MonoBehaviour:
   maxLookX: 85
   camSensitivity: 0.1
   cam: {fileID: 777984762206619996}
-  itemHoldPoint: {fileID: 0}
+  PickUpContainer: {fileID: 0}
   tabMenuUI: {fileID: 0}
   rightClickUI: {fileID: 0}
 --- !u!114 &637190120033781337

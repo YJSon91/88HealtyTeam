@@ -252,6 +252,7 @@ GameObject:
   - component: {fileID: 297692117119022821}
   - component: {fileID: 2035810371472905072}
   - component: {fileID: 3274319258853262417}
+  - component: {fileID: 1588045028293941435}
   m_Layer: 5
   m_Name: Health
   m_TagString: Untagged
@@ -318,6 +319,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1588045028293941435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4144180641180970490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 221cd2711a1592f49bc86527b8772b24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curValue: 0
+  maxValue: 100
+  startValue: 100
+  passiveValue: 1
+  uiBar: {fileID: 0}
 --- !u!1 &5431095855299041339
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,6 +572,7 @@ GameObject:
   - component: {fileID: 3854386220123966049}
   - component: {fileID: 8774172983620924897}
   - component: {fileID: 1700100817556950398}
+  - component: {fileID: 8484375599442010538}
   m_Layer: 5
   m_Name: Stamina
   m_TagString: Untagged
@@ -620,3 +639,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8484375599442010538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8935163484084253589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 221cd2711a1592f49bc86527b8772b24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curValue: 0
+  maxValue: 100
+  startValue: 100
+  passiveValue: 5
+  uiBar: {fileID: 0}

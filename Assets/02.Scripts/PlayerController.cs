@@ -172,7 +172,7 @@ public class PlayerController : MonoBehaviour
                     Vector3 dropPosition = heldItem.transform.position;
                     Vector3 halfExtents = itemCollider.bounds.extents;
                     Quaternion orientation = heldItem.transform.rotation;
-                    int itemDropMask = ~LayerMask.GetMask("Player"); // Player 레이어만 제외
+                    int itemDropMask = ~LayerMask.GetMask("Player", "Poison"); // Player 레이어만 제외
 
                     // 겹치는 오브젝트가 있으면 드랍 불가
                     if (Physics.CheckBox(dropPosition, halfExtents, orientation, itemDropMask))
@@ -196,7 +196,7 @@ public class PlayerController : MonoBehaviour
 
             // 카메라 중앙에서 Ray를 쏨, 픽업 아이템이 없을 때만 실행
             Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
-            int mask = ~LayerMask.GetMask("Player"); // 플레이어 레이어를 제외한 모든 레이어에 대해 Raycast
+            int mask = ~LayerMask.GetMask("Player","Poison"); // 플레이어 레이어를 제외한 모든 레이어에 대해 Raycast
             if (Physics.Raycast(ray, out RaycastHit hit, 10f, mask)) // 10f: 상호작용 거리
             {
                 // PickupableItem 컴포넌트가 있으면 픽업

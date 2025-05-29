@@ -21,6 +21,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip footstepWalk;
     public AudioClip footstepRun;
     public AudioClip jumpSound;
+    public AudioClip stageSuccessBGM;
 
     private string currentBGM = "";
 
@@ -41,6 +42,7 @@ public class SoundManager : MonoBehaviour
     {
         bgmSource.clip = isEmergency ? stageBGM_Emergency : stageBGM_Normal;
         bgmSource.Play();
+        currentBGM = "Stage";
     }
 
     public void PlayLobbyBGM()
@@ -53,6 +55,14 @@ public class SoundManager : MonoBehaviour
         bgmSource.Play();
 
         currentBGM = "Lobby";
+    }
+
+    public void PlayStageSuccessBGM()
+    {
+        bgmSource.clip = stageSuccessBGM;
+        bgmSource.Play();
+
+        currentBGM = "StageSuccess";
     }
 
     public void PlaySFX(string sfxName)  

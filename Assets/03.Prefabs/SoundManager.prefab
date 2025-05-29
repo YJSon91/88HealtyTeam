@@ -59,6 +59,7 @@ MonoBehaviour:
   footstepWalk: {fileID: 8300000, guid: 9479dd4619442ec47a1f424add8230d5, type: 3}
   footstepRun: {fileID: 8300000, guid: b094fecb8fdb976409a8cf8906519f7b, type: 3}
   jumpSound: {fileID: 0}
+  stageSuccessBGM: {fileID: 8300000, guid: 188f031cdef4db24ea1d535a0c852f15, type: 3}
 --- !u!82 &4782323305424101358
 AudioSource:
   m_ObjectHideFlags: 0

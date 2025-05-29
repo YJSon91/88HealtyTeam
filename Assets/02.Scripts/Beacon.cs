@@ -6,7 +6,7 @@ public class Beacon : MonoBehaviour, IInteractable
 {
     public ObjectData objectData;
 
-    private Renderer renderer;
+    private new Renderer renderer;
     [SerializeField] private bool isActivated = false;
     public IBeaconActivate beaconActivate;
     public GameObject door;

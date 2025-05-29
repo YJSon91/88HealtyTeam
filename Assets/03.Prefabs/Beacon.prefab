@@ -126,6 +126,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a09e35490a51844fb2e66395da82f9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beaconData: {fileID: 11400000, guid: 931b33b8115aa294cba73dae646c9fb5, type: 2}
+  objectData: {fileID: 11400000, guid: 931b33b8115aa294cba73dae646c9fb5, type: 2}
   isActivated: 0
   door: {fileID: 0}

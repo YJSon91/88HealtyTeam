@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Beacon : MonoBehaviour
+public class Beacon : MonoBehaviour, IInteractable
 {
-    public BeaconData beaconData;
+    public ObjectData objectData;
 
     private new Renderer renderer;
     [SerializeField] private bool isActivated = false;
@@ -15,7 +15,7 @@ public class Beacon : MonoBehaviour
     {
         renderer = GetComponent<Renderer>();
         beaconActivate = door.GetComponent<IBeaconActivate>();
-        renderer.material.color = ChangeColor(beaconData.beaconColor);
+        renderer.material.color = ChangeColor(objectData.objectColor);
     }
 
     void Update()
@@ -63,7 +63,7 @@ public class Beacon : MonoBehaviour
     {
         bool result = false;
 
-        if (item.itemData.itemColor == beaconData.beaconColor)
+        if (item.objectData.objectColor == objectData.objectColor)
         {
             result = true;
 
@@ -105,5 +105,10 @@ public class Beacon : MonoBehaviour
             default:
                 return Color.white;
         }
+    }
+
+    public ObjectData GetInteractableInfo()
+    {
+        return objectData;
     }
 }

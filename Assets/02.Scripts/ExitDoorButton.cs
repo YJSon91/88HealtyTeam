@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class ExitDoorButton : MonoBehaviour
 {
-    public GameObject exitDoor;
-    public OXPanel OXPanel;
-    public bool isExitDoorOpen = false;
+    [SerializeField] private GameObject exitDoor;
+    [SerializeField] private OXPanel OXPanel;
+    [SerializeField] private bool isExitDoorOpen;
     public IBeaconActivate beaconActivate;
 
     private void Start()
     {
+        isExitDoorOpen = false;
         beaconActivate = exitDoor.GetComponent<IBeaconActivate>();
     }
 
@@ -18,13 +19,17 @@ public class ExitDoorButton : MonoBehaviour
     {
         if (!isExitDoorOpen)
         {
-            beaconActivate.ActivateBeacon();
             OXPanel.ShowPanelO();
+            beaconActivate.ActivateBeacon();
+            isExitDoorOpen = true;
+            return;
         }
         if (isExitDoorOpen)
         {
-            beaconActivate.DeactivateBeacon();
             OXPanel.ShowPanelX();
+            beaconActivate.DeactivateBeacon();
+            isExitDoorOpen = false;
+            return;
         }
     }
 }

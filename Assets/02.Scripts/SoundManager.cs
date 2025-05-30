@@ -41,6 +41,7 @@ public class SoundManager : MonoBehaviour
     public void PlayStageBGM(string stageName, bool isEmergency)
     {
         bgmSource.clip = isEmergency ? stageBGM_Emergency : stageBGM_Normal;
+        bgmSource.volume = 0.05f;
         bgmSource.Play();
         currentBGM = "Stage";
     }

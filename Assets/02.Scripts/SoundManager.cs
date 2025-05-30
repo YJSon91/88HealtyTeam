@@ -18,7 +18,6 @@ public class SoundManager : MonoBehaviour
     public AudioClip damageSound;
     public AudioClip buttonPressSound;
     public AudioClip doorOpenSound;
-    public AudioClip doorCloseSound;
     public AudioClip footstepWalk;
     public AudioClip footstepRun;
     public AudioClip jumpSound;
@@ -42,7 +41,8 @@ public class SoundManager : MonoBehaviour
     public void PlayStageBGM(string stageName, bool isEmergency)
     {
         bgmSource.clip = isEmergency ? stageBGM_Emergency : stageBGM_Normal;
-        bgmSource?.Play();
+        bgmSource.volume = 0.05f;
+        bgmSource.Play();
         currentBGM = "Stage";
     }
 
@@ -53,7 +53,7 @@ public class SoundManager : MonoBehaviour
         bgmSource.clip = lobbyBGM;
         bgmSource.loop = true;
         bgmSource.volume = 1f;
-        bgmSource?.Play();
+        bgmSource.Play();
 
         currentBGM = "Lobby";
     }
@@ -61,7 +61,7 @@ public class SoundManager : MonoBehaviour
     public void PlayStageSuccessBGM()
     {
         bgmSource.clip = stageSuccessBGM;
-        bgmSource?.Play();
+        bgmSource.Play();
 
         currentBGM = "StageSuccess";
     }
@@ -71,7 +71,7 @@ public class SoundManager : MonoBehaviour
         AudioClip clip = Resources.Load<AudioClip>("SFX/" + sfxName); // Resources.Load로 효과음들 로드
         if (clip != null)                                             // Resources폴더안에 SFX 폴더안에 오디오네임
         {                                                            // 점프에 효과음을 넣고싶으면 점프 코드안에 밑에 코드를 넣어주면 효과음이 나옴
-            sfxSource?.PlayOneShot(clip);                             // SoundManager.Instance.PlaySFX("jumpSound");
+            sfxSource.PlayOneShot(clip);                             // SoundManager.Instance.PlaySFX("jumpSound");
         }
         else
         {
@@ -82,38 +82,34 @@ public class SoundManager : MonoBehaviour
     public void PlayPlayerFootstep(bool isRunning)
     {
         AudioClip clip = isRunning ? footstepRun : footstepWalk;
-        sfxSource?.PlayOneShot(clip);
+        sfxSource.PlayOneShot(clip);
     }
 
     public void PlayDamageSound()
     {
-        sfxSource?.PlayOneShot(damageSound);
+        sfxSource.PlayOneShot(damageSound);
     }
 
     public void PlayButtonPressSound()
     {
-        sfxSource?.PlayOneShot(buttonPressSound);
+        sfxSource.PlayOneShot(buttonPressSound);
     }
 
     public void PlayDoorOpenSound()
     {
-        sfxSource?.PlayOneShot(doorOpenSound);
+        sfxSource.PlayOneShot(doorOpenSound);
     }
 
-    public void PlayDoorCloseSound()
-    {
-        sfxSource?.PlayOneShot(doorCloseSound);
-    }
     public void PlayJumpSound()
     {
-        sfxSource?.PlayOneShot(jumpSound);
+        sfxSource.PlayOneShot(jumpSound);
     }
 
     public void StopFootstep()
     {
         if (footstepSource.isPlaying)
         {
-            footstepSource?.Stop();
+            footstepSource.Stop();
         }
     }
 

@@ -23,7 +23,7 @@ public class TimerUI : MonoBehaviour
         // 30초 이하일 때 긴급 BGM 전환 (한 번만)
         if (time <= 30f && !emergencyTriggered)
         {
-            SoundManager.Instance.PlayStageBGM("Stage1", true); // true = 긴급 상황
+            SoundManager.Instance.PlayStageBGM("Stage", true);
             emergencyTriggered = true;
         }
     }

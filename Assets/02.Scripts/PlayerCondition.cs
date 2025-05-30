@@ -20,12 +20,28 @@ public class PlayerCondition : MonoBehaviour
     [SerializeField] private GameObject DieUI;
     private bool isDead = false;
 
+    [Header("UI 연동")]
+    public Condition healthBar;
+    public Condition staminaBar;
+
     public event Action onTakeDamage;//피해를 입었을 때 발생하는 델리게이트 이벤트
 
     void Start()
     {
         if (DieUI != null)
             DieUI.SetActive(false);//죽은 상태일 때 UI 비활성화
+
+        if (healthBar != null)
+        {
+            healthBar.maxValue = 100;
+            healthBar.curValue = health;
+        }
+
+        if (staminaBar != null)
+        {
+            staminaBar.maxValue = 100;
+            staminaBar.curValue = Stamina;
+        }
     }
 
     private void Awake()
@@ -38,6 +54,12 @@ public class PlayerCondition : MonoBehaviour
         {
             Die();
         }
+
+        if (healthBar != null)
+            healthBar.curValue = health;
+
+        if (staminaBar != null)
+            staminaBar.curValue = Stamina;
 
         // 체력이 30 이하이면 반복적으로 대미지 사운드 재생 시작
         if (health <= 30 && !isLowHpWarningActive)
@@ -61,6 +83,7 @@ public class PlayerCondition : MonoBehaviour
 
         StaminaAmountOfChange();
     }
+
     IEnumerator PlayLowHpWarning()
     {
         while (true)

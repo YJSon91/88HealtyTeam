@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.009813858, g: 0.058195837, b: 0.10476842, a: 1}
+  m_IndirectSpecularColor: {r: 0.010003644, g: 0.058198363, b: 0.10483601, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1920,7 +1920,6 @@ MonoBehaviour:
   door2Object: {fileID: 4975399995709478322}
   finalExitDoorObject: {fileID: 4744189713196553076}
   isStage1EffectivelyCleared: 0
-  stage1LobbyButtonIndicator: {fileID: 1390993659}
   stageTimeLimit: 180
 --- !u!4 &182190708
 Transform:
@@ -15114,79 +15113,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1195415760139927943, guid: aae952dc76387e84287a598d901b120d, type: 3}
   m_PrefabInstance: {fileID: 1110634748}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1390993658
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2416714534081150465, guid: c46bc381f5189624c8958d5269caa6bf, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416714534081150465, guid: c46bc381f5189624c8958d5269caa6bf, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416714534081150465, guid: c46bc381f5189624c8958d5269caa6bf, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416714534081150465, guid: c46bc381f5189624c8958d5269caa6bf, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416714534081150465, guid: c46bc381f5189624c8958d5269caa6bf, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416714534081150465, guid: c46bc381f5189624c8958d5269caa6bf, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416714534081150465, guid: c46bc381f5189624c8958d5269caa6bf, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416714534081150465, guid: c46bc381f5189624c8958d5269caa6bf, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416714534081150465, guid: c46bc381f5189624c8958d5269caa6bf, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416714534081150465, guid: c46bc381f5189624c8958d5269caa6bf, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4831412997300681092, guid: c46bc381f5189624c8958d5269caa6bf, type: 3}
-      propertyPath: GameManager
-      value: 
-      objectReference: {fileID: 182190707}
-    - target: {fileID: 5415130884089466452, guid: c46bc381f5189624c8958d5269caa6bf, type: 3}
-      propertyPath: m_Name
-      value: LobbyButton
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 3663051793913136240, guid: c46bc381f5189624c8958d5269caa6bf, type: 3}
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c46bc381f5189624c8958d5269caa6bf, type: 3}
---- !u!114 &1390993659 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4831412997300681092, guid: c46bc381f5189624c8958d5269caa6bf, type: 3}
-  m_PrefabInstance: {fileID: 1390993658}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7669341e21736b440a1bc77e014008e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1394667499
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29036,7 +28962,6 @@ SceneRoots:
   - {fileID: 1111411755}
   - {fileID: 1907593892}
   - {fileID: 2105913487}
-  - {fileID: 1390993658}
   - {fileID: 1695404325}
   - {fileID: 101334159}
   - {fileID: 942175311}

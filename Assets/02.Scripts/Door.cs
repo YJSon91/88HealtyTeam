@@ -11,13 +11,13 @@ public interface IBeaconActivate
 
 public class Door : MonoBehaviour, IBeaconActivate
 {
-    public OXPanel oxPanel;
+    [SerializeField] private OXPanel oxPanel;
     public void ActivateBeacon()
     {
         gameObject.SetActive(false);
         oxPanel.ShowPanelO();
 
-        SoundManager.Instance.PlaySFX("doorOpenSound");
+        //SoundManager.Instance.PlaySFX("doorOpenSound");
     }
     public void DeactivateBeacon()
     {

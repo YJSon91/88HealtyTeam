@@ -67,7 +67,7 @@ public class EnvironmentalHazard : MonoBehaviour
             StopCoroutine(poisoning);
             Debug.Log($"중독 종료, 현재체력{player.condition.health}");
         }
-        else if (type == HazardType.POISON_GAS_AREA)
+        else if (type == HazardType.POISON_POOL)
         {
             StopCoroutine(deepPoisoning);
         }

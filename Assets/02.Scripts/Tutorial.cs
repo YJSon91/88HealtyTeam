@@ -18,6 +18,7 @@ using UnityEngine;
 public class Tutorial : MonoBehaviour
 {
     private Coroutine coroutine;
+    private float waitTime = 5.0f; // 튜토리얼 UI가 표시되는 시간
 
     void Start()
     {
@@ -32,6 +33,24 @@ public class Tutorial : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log(this.gameObject.name + "과 충돌함");
+
+        switch (this.gameObject.name)
+        {
+            // memo: 오브젝트 이름이 바뀌면 이 스위치문을 일일히 수정해야 한다. 다른 방법이 없을까?
+            case "BasicTutorial":
+                break;
+            case "LobbyTutorial":
+                break;
+            case "PoisonMapTutorial":
+                break;
+            case "PoisonMapPuzzleTutorial":
+                break;
+            case "BeaconGimmickTutorial":
+                break;
+            default:
+                Debug.Log("알 수 없는 튜토리얼 오브젝트입니다.");
+                break;
+        }
     }
 
     /// <summary>
@@ -40,7 +59,9 @@ public class Tutorial : MonoBehaviour
     /// <returns></returns>
     IEnumerable DisableTutorialUI()
     {
-        yield return null;
+        yield return new WaitForSeconds(waitTime);
+
+        // 현재 활성화된 튜토리얼 UI를 비활성화
     }
 
     /// <summary>

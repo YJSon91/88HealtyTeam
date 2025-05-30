@@ -63,7 +63,7 @@ public class Tutorial : MonoBehaviour
 
                     break;
                 case TutorialType.PoisonMapPuzzle:
-                    ui.tutorialText.text = "상호작용을 통해 퍼즐을 풀 수 있습니다\r\n구슬을 클릭하면 십자모양으로 구슬의 색이 변합니다\r\n모든 구슬의 색을 똑같이 바꾸면 성공입니다";
+                    ui.tutorialText.text = "상호작용을 통해 퍼즐을 풀 수 있습니다\r\n구슬을 클릭하면 세로로 두 칸의 구슬색이 변합니다\r\n모든 구슬의 색을 똑같이 바꾸면 성공입니다";
 
                     break;
                 case TutorialType.BeaconGimmick:

@@ -189,6 +189,11 @@ public class GameManager : MonoBehaviour
         // TODO: UI 시스템 담당에게 게임오버 UI 표시 요청
         // if (UIManager.Instance != null) UIManager.Instance.ShowGameOverUI(reason);
         // Time.timeScale = 0f; // 게임 시간을 멈춤 (선택적)
+        GameOverUI ui = FindObjectOfType<GameOverUI>();
+        if (ui != null)
+        {
+            ui.ShowGameOver(reason);
+        }
     }
 
     // --- (선택적) 로비 버튼 인디케이터 시각적 업데이트 ---

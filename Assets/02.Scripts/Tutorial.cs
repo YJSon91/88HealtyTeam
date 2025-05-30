@@ -29,9 +29,9 @@ public class Tutorial : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(collision.gameObject.name + "과 충돌함");
+        Debug.Log(this.gameObject.name + "과 충돌함");
     }
 
     /// <summary>

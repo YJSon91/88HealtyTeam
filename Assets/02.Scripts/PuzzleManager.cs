@@ -135,7 +135,7 @@ public class PuzzleManager : MonoBehaviour
         SceneManager.UnloadSceneAsync("PuzzleScene");
         Debug.Log("퍼즐 클리어! 문이 열립니다.");
 
-        SoundManager.Instance.PlaySFX("doorOpenSound");
+        SoundManager.Instance?.PlaySFX("doorOpenSound");
     }
 
     public void GoBack()

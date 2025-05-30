@@ -207,7 +207,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        SoundManager.Instance.PlaySFX("jumpSound");
+        SoundManager.Instance?.PlaySFX("jumpSound");
     }
     public void OnLeftClick(InputAction.CallbackContext context)
     {

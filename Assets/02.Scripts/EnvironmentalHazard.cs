@@ -7,7 +7,8 @@ using UnityEngine;
 public enum HazardType
 {
     SLOWING_LIQUID,
-    POISON_GAS_AREA
+    POISON_GAS_AREA,
+    POISON_POOL
 }
 
 
@@ -18,6 +19,7 @@ public class EnvironmentalHazard : MonoBehaviour
     private float effectValue;
 
     private Coroutine poisoning;
+    private Coroutine deepPoisoning;
 
     private void Start()
     {
@@ -42,6 +44,15 @@ public class EnvironmentalHazard : MonoBehaviour
             effectValue = 1.0f;
             poisoning = StartCoroutine(Poisoning((int)effectValue));
         }
+        else if (type == HazardType.POISON_POOL)
+        {
+            if (deepPoisoning != null)
+            {
+                StopCoroutine(deepPoisoning);
+            }
+            effectValue = 2.0f;
+            deepPoisoning = StartCoroutine(Poisoning((int)effectValue));
+        }
     }
 
     public void RemoveEffect(Player player)
@@ -55,6 +66,10 @@ public class EnvironmentalHazard : MonoBehaviour
         {
             StopCoroutine(poisoning);
             Debug.Log($"중독 종료, 현재체력{player.condition.health}");
+        }
+        else if (type == HazardType.POISON_POOL)
+        {
+            StopCoroutine(deepPoisoning);
         }
     }
 

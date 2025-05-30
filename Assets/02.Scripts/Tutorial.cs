@@ -1,28 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-/*
- * 모든 튜토리얼은 코루틴으로 관리
- * TutorialCoroutine을 만들어 튜토리얼이 동작할 때마다 해당하는 튜토리얼을 실행하는 함수를 코루틴에 넣는다
- * 이미 동작중인 코루틴이 있을 경우, 기존 코루틴을 취소하고, TutorialSwitch와 같은 함수를 만들어 기존에 표시하고 있던 튜토리얼은 화면에서 지우고, 새로운 튜토리얼이 나타날 수 있도록 한다
- * 
- * 1. 튜토리얼 UI를 캔버스에 추가
- * 2. OnTrigger든, OnCollision이든 이벤트가 동작하면 coroutine에 해당 튜토리얼을 실행하는 함수를 넣는다
- * 3. 코루틴에는 활성화시킬 UI오브젝트, 오브젝트의 내용을 넣는다
- */
 /// <summary>
 /// 플레이 방법, 또는 지역의 특징 등을 설명하는 튜토리얼 클래스
 /// </summary>
 public class Tutorial : MonoBehaviour
 {
+    private TutorialUI ui;
     private Coroutine coroutine;
-    private float waitTime = 5.0f; // 튜토리얼 UI가 표시되는 시간
+    private List<string> alreadyShowTutorials = new List<string>(); // 이미 표시한 튜토리얼 리스트
 
     void Start()
     {
-        
+        ui = FindObjectOfType<TutorialUI>();
     }
 
     void Update()
@@ -30,26 +21,52 @@ public class Tutorial : MonoBehaviour
         
     }
 
+    // 이미 표시한 튜토리얼은 name을 리스트에 저장한 후, 같은 name과 충돌했을 경우, 표시하지 않도록 한다
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(this.gameObject.name + "과 충돌함");
-
-        switch (this.gameObject.name)
+        if (this.GetComponent<Tutorial>() != null) // 튜토리얼 트리거와 충돌했을 때
         {
-            // memo: 오브젝트 이름이 바뀌면 이 스위치문을 일일히 수정해야 한다. 다른 방법이 없을까?
-            case "BasicTutorial":
-                break;
-            case "LobbyTutorial":
-                break;
-            case "PoisonMapTutorial":
-                break;
-            case "PoisonMapPuzzleTutorial":
-                break;
-            case "BeaconGimmickTutorial":
-                break;
-            default:
-                Debug.Log("알 수 없는 튜토리얼 오브젝트입니다.");
-                break;
+            if (alreadyShowTutorials.Contains(this.gameObject.name))
+                return; // 이미 표시한 튜토리얼은 다시 표시하지 않음
+
+            float waitTime = 5f; // UI표시 시간
+
+            if (coroutine != null)
+            {
+                StopCoroutine(coroutine); // 이미 실행중인 코루틴이 있다면 중지
+            }
+
+            ui.gameObject.SetActive(true);
+
+            switch (this.gameObject.name)
+            {
+                // memo: 오브젝트 이름이 바뀌면 이 스위치문을 일일히 수정해야 한다. 다른 방법이 없을까?
+                case "BasicTutorial":
+                    ui.tutorialText.text = "이동: W, A, S, D\r\nL_Click: 상호작용\r\nR_Click: 조사\r\nL_Shift: 달리기\r\nSpace: 점프, 더블 점프";
+                    waitTime = 10f;
+                    break;
+                case "LobbyTutorial":
+                    ui.tutorialText.text = "모든 맵의 비콘을 동작시키면 탈출구를 개방할 수 있습니다\r\n모든 맵의 퍼즐을 풀어 탈출하세요";
+                    break;
+                case "PoisonMapTutorial":
+                    ui.tutorialText.text = "맹독 지역입니다\r\n숨만 쉬어도 체력이 깎여나가며, 맹독 늪에 빠지면 더 많은 체력을 잃습니다";
+
+                    break;
+                case "PoisonMapPuzzleTutorial":
+                    ui.tutorialText.text = "상호작용을 통해 퍼즐을 풀 수 있습니다\r\n구슬을 클릭하면 십자모양으로 구슬의 색이 변합니다\r\n모든 구슬의 색을 똑같이 바꾸면 성공입니다";
+
+                    break;
+                case "BeaconGimmickTutorial":
+                    ui.tutorialText.text = "발판을 적절히 움직여 타고 올라가 키 아이템을 손에 넣을 수 있습니다\r\n키 아이템 습득 후, 아이템과 같은 색깔의 비콘에 넣어 맵을 클리어할 수 있습니다";
+
+                    break;
+                default:
+                    Debug.Log("알 수 없는 튜토리얼 오브젝트입니다.");
+                    break;
+            }
+
+            alreadyShowTutorials.Add(this.gameObject.name); // 표시한 튜토리얼은 다시 표시하지 않도록 리스트에 저장
+            coroutine = StartCoroutine(DisableTutorialUI(waitTime));
         }
     }
 
@@ -57,18 +74,11 @@ public class Tutorial : MonoBehaviour
     /// 일정 시간 후, 현재 실행중인 튜토리얼 비활성화
     /// </summary>
     /// <returns></returns>
-    IEnumerable DisableTutorialUI()
+    private IEnumerator DisableTutorialUI(float duration)
     {
-        yield return new WaitForSeconds(waitTime);
+        yield return new WaitForSeconds(duration);
 
         // 현재 활성화된 튜토리얼 UI를 비활성화
-    }
-
-    /// <summary>
-    /// 현재 표시중인 튜토리얼 UI를 즉시 비활성화 시키고, 새로운 튜토리얼 UI를 표시
-    /// </summary>
-    private void CancleTutorialUI()
-    {
-
+        ui.gameObject.SetActive(false);
     }
 }

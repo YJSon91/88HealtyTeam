@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     // --- 스테이지 타이머 및 게임 오버 관련 변수 ---
     public float stageTimeLimit = 180f; // 예: 3분 (Inspector에서 조절 가능)
     private float currentTimer;
-    private bool isGameOver = false;
+    public bool isGameOver = false;
     private bool isGamePaused = false; // (선택적) 일시정지 기능용
 
     void Awake()
@@ -182,7 +182,7 @@ public class GameManager : MonoBehaviour
         SaveCurrentGameData(); // 게임 클리어 시 최종 상태 저장
     }
 
-    private void GameOver(string reason)
+    public void GameOver(string reason)
     {
         isGameOver = true;
         Debug.Log($"GameManager: 게임 오버! 사유: {reason}");

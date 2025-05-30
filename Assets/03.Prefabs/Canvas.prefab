@@ -335,7 +335,7 @@ MonoBehaviour:
   maxValue: 100
   startValue: 100
   passiveValue: 1
-  uiBar: {fileID: 0}
+  uiBar: {fileID: 9056127717076500518}
 --- !u!1 &5431095855299041339
 GameObject:
   m_ObjectHideFlags: 0
@@ -655,4 +655,4 @@ MonoBehaviour:
   maxValue: 100
   startValue: 100
   passiveValue: 5
-  uiBar: {fileID: 0}
+  uiBar: {fileID: 7341784675727663785}

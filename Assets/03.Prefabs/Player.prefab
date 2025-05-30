@@ -235,7 +235,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 1
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.85, z: 0}
 --- !u!114 &6657963497448078868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -441,6 +441,8 @@ MonoBehaviour:
   staminaRegenPerSec: 10
   uiCondition: {fileID: 0}
   DieUI: {fileID: 0}
+  healthBar: {fileID: 0}
+  staminaBar: {fileID: 0}
 --- !u!1 &8800959695718332773
 GameObject:
   m_ObjectHideFlags: 0

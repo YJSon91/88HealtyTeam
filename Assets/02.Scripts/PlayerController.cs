@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour
         while (true)
         {
             bool isRunning = isDashing;
-            SoundManager.Instance.PlayPlayerFootstep(isRunning);
+            SoundManager.Instance?.PlayPlayerFootstep(isRunning);
 
             yield return new WaitForSeconds(isRunning ? 0.3f : 0.5f);
         }
@@ -207,7 +207,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        SoundManager.Instance.PlaySFX("jumpSound");
+        SoundManager.Instance?.PlaySFX("jumpSound");
     }
     public void OnLeftClick(InputAction.CallbackContext context)
     {

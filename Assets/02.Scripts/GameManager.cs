@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     // --- 스테이지 타이머 및 게임 오버 관련 변수 ---
     public float stageTimeLimit = 180f; // 예: 3분 (Inspector에서 조절 가능)
     private float currentTimer;
-    private bool isGameOver = false;
+    public bool isGameOver = false;
     private bool isGamePaused = false; // (선택적) 일시정지 기능용
 
     void Awake()
@@ -123,30 +123,36 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ReportBeaconActivated()
+    public void ReportBeaconActivated(bool isPressed)
     {
         if (isGameOver) return;
-        if (isGasRoomPuzzle1Solved && !isBeaconActivated)
+
+        if (isPressed)
         {
             isBeaconActivated = true;
             Debug.Log("GameManager: 비콘 활성화됨! Door2를 엽니다.");
             if (door2Object != null)
             {
-                door2Object.SetActive(false); // Door2 열기
                 if (SoundManager.Instance != null) SoundManager.Instance.PlayDoorOpenSound();
             }
-            // SaveCurrentGameData(); // 주요 진행 상황 변경 시 저장 (선택적)
         }
-        else if (!isGasRoomPuzzle1Solved)
+        else
         {
-            Debug.LogWarning("GameManager: 비콘 활성화 시도 - 아직 GasRoom_Puzzle1이 해결되지 않음!");
+            isBeaconActivated = false;
+            Debug.Log("GameManager: 비콘 비활성화됨! Door2가 닫힙니다.");
+            if (door2Object != null)
+            {
+                if (SoundManager.Instance != null) SoundManager.Instance.PlayDoorCloseSound();
+            }
         }
+        // SaveCurrentGameData(); // 주요 진행 상황 변경 시 저장 (선택적)
     }
 
-    public void ReportFinalStageButtonPressed()
+    public void ReportFinalStageButtonPressed(bool isExitOpen)
     {
         if (isGameOver) return;
-        if (isBeaconActivated && !isFinalButtonPressed)
+
+        if (isExitOpen)
         {
             isFinalButtonPressed = true;
             isStage1EffectivelyCleared = true;
@@ -154,14 +160,19 @@ public class GameManager : MonoBehaviour
 
             if (finalExitDoorObject != null)
             {
-                finalExitDoorObject.SetActive(false); // FinalExitDoor 열기
                 if (SoundManager.Instance != null) SoundManager.Instance.PlayDoorOpenSound();
             }
-            GameClear();
         }
-        else if (!isBeaconActivated)
+        else
         {
-            Debug.LogWarning("GameManager: 최종 버튼 누름 시도 - 아직 비콘이 활성화되지 않음!");
+            isFinalButtonPressed = false;
+            isStage1EffectivelyCleared = false;
+            Debug.Log("GameManager: 스테이지 내 최종 버튼 눌림! FinalExitDoor가 닫힙니다.");
+
+            if (finalExitDoorObject != null)
+            {
+                if (SoundManager.Instance != null) SoundManager.Instance.PlayDoorCloseSound();
+            }
         }
     }
 
@@ -172,7 +183,7 @@ public class GameManager : MonoBehaviour
     }
 
     // --- 게임 상태 변경 함수 ---
-    private void GameClear()
+    public void GameClear()
     {
         isGameOver = true;
         Debug.Log("GameManager: 스테이지 클리어!");
@@ -182,7 +193,7 @@ public class GameManager : MonoBehaviour
         SaveCurrentGameData(); // 게임 클리어 시 최종 상태 저장
     }
 
-    private void GameOver(string reason)
+    public void GameOver(string reason)
     {
         isGameOver = true;
         Debug.Log($"GameManager: 게임 오버! 사유: {reason}");

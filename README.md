@@ -31,9 +31,8 @@
 
 ## 🖼️ 인게임 스크린샷
 
-<p align="center">
-  <img src="Assets/ScreenShot/ScreenShot.png" alt="Escape from the Laboratory 인게임 예시" width="600"/>
-</p>
+![게임 스크린샷](Assets/ScreenShot/ScreenShot.png)
+
 
 ---
 

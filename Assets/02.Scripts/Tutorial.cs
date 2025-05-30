@@ -9,7 +9,18 @@ public class Tutorial : MonoBehaviour
 {
     private TutorialUI ui;
     private Coroutine coroutine;
-    private List<string> alreadyShowTutorials = new List<string>(); // 이미 표시한 튜토리얼 리스트
+    private List<TutorialType> alreadyShowTutorials = new List<TutorialType>(); // 이미 표시한 튜토리얼 리스트
+
+    private enum TutorialType
+    {
+        Basic,
+        Lobby,
+        PoisonMap,
+        PoisonMapPuzzle,
+        BeaconGimmick
+    }
+
+    [SerializeField] private TutorialType type;
 
     void Start()
     {
@@ -26,38 +37,38 @@ public class Tutorial : MonoBehaviour
     {
         if (this.GetComponent<Tutorial>() != null) // 튜토리얼 트리거와 충돌했을 때
         {
-            if (alreadyShowTutorials.Contains(this.gameObject.name))
+            if (alreadyShowTutorials.Contains(this.type))
                 return; // 이미 표시한 튜토리얼은 다시 표시하지 않음
-
-            float waitTime = 5f; // UI표시 시간
 
             if (coroutine != null)
             {
                 StopCoroutine(coroutine); // 이미 실행중인 코루틴이 있다면 중지
             }
 
+            float waitTime = 5f; // UI표시 시간
             ui.gameObject.SetActive(true);
 
-            switch (this.gameObject.name)
+            switch (this.type)
             {
-                // memo: 오브젝트 이름이 바뀌면 이 스위치문을 일일히 수정해야 한다. 다른 방법이 없을까?
-                case "BasicTutorial":
+                case TutorialType.Basic:
                     ui.tutorialText.text = "이동: W, A, S, D\r\nL_Click: 상호작용\r\nR_Click: 조사\r\nL_Shift: 달리기\r\nSpace: 점프, 더블 점프";
                     waitTime = 10f;
+
                     break;
-                case "LobbyTutorial":
+                case TutorialType.Lobby:
                     ui.tutorialText.text = "모든 맵의 비콘을 동작시키면 탈출구를 개방할 수 있습니다\r\n모든 맵의 퍼즐을 풀어 탈출하세요";
                     break;
-                case "PoisonMapTutorial":
+                case TutorialType.PoisonMap:
                     ui.tutorialText.text = "맹독 지역입니다\r\n숨만 쉬어도 체력이 깎여나가며, 맹독 늪에 빠지면 더 많은 체력을 잃습니다";
 
                     break;
-                case "PoisonMapPuzzleTutorial":
+                case TutorialType.PoisonMapPuzzle:
                     ui.tutorialText.text = "상호작용을 통해 퍼즐을 풀 수 있습니다\r\n구슬을 클릭하면 십자모양으로 구슬의 색이 변합니다\r\n모든 구슬의 색을 똑같이 바꾸면 성공입니다";
 
                     break;
-                case "BeaconGimmickTutorial":
+                case TutorialType.BeaconGimmick:
                     ui.tutorialText.text = "발판을 적절히 움직여 타고 올라가 키 아이템을 손에 넣을 수 있습니다\r\n키 아이템 습득 후, 아이템과 같은 색깔의 비콘에 넣어 맵을 클리어할 수 있습니다";
+                    waitTime = 10f;
 
                     break;
                 default:
@@ -65,7 +76,7 @@ public class Tutorial : MonoBehaviour
                     break;
             }
 
-            alreadyShowTutorials.Add(this.gameObject.name); // 표시한 튜토리얼은 다시 표시하지 않도록 리스트에 저장
+            alreadyShowTutorials.Add(this.type); // 표시한 튜토리얼은 다시 표시하지 않도록 리스트에 저장
             coroutine = StartCoroutine(DisableTutorialUI(waitTime));
         }
     }

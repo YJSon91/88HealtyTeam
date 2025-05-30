@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
     [Header("UI")]
     [SerializeField] private GameObject tabMenuUI;// Tab UI 오브젝트 선언 (인스펙터에서 할당)
     [SerializeField] private GameObject rightClickUI; // 우클릭 UI 오브젝트 (인스펙터에서 할당, 오브젝트 정보를 표시하기 위한 UI)
+    [SerializeField] private TextMeshProUGUI rightClickTMP; // Object Description에 연결
 
     private bool isPaused = false;
     private bool isPuzzleActive = false;
@@ -179,7 +180,7 @@ public class PlayerController : MonoBehaviour
                     Vector3 dropPosition = heldItem.transform.position;// 아이템을 내려놓을 위치
                     Vector3 halfExtents = itemCollider.bounds.extents;// 아이템의 절반 크기
                     Quaternion orientation = heldItem.transform.rotation; // 아이템의 회전값
-                    int itemDropMask = ~LayerMask.GetMask("Player","Poison"); // Player 레이어만 제외
+                    int itemDropMask = ~LayerMask.GetMask("Player","Poison", "BGM"); // Player 레이어만 제외
 
                     // 겹치는 오브젝트가 있으면 드랍 불가
                     if (Physics.CheckBox(dropPosition, halfExtents, orientation, itemDropMask))
@@ -203,7 +204,7 @@ public class PlayerController : MonoBehaviour
 
             // 카메라 중앙에서 Ray를 쏨, 픽업 아이템이 없을 때만 실행
             Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
-            int mask = ~LayerMask.GetMask("Player","Poison"); // 플레이어 레이어를 제외한 모든 레이어에 대해 Raycast
+            int mask = ~LayerMask.GetMask("Player","Poison","BGM"); // 플레이어 레이어를 제외한 모든 레이어에 대해 Raycast
             if (Physics.Raycast(ray, out RaycastHit hit, 10f, mask)) // 10f: 상호작용 거리
             {
                 // PickupableItem 컴포넌트가 있으면 픽업
@@ -252,7 +253,30 @@ public class PlayerController : MonoBehaviour
     {
         if (isPuzzleActive) return; // 퍼즐 중엔 입력 무시
         if (isPaused) return; // 퍼즈 중 입력 무시
-        // 오브젝트가 구현되고 나서 구현 예정
+        if (context.phase == InputActionPhase.Performed)
+        {
+            // 우클릭 누름: 레이캐스트로 IInteractable 감지
+            Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+            int mask = ~LayerMask.GetMask("Player", "Poison","BGM");
+            if (Physics.Raycast(ray, out RaycastHit hit, 10f, mask))
+            {
+                var interactable = hit.collider.GetComponent<IInteractable>();
+                if (interactable != null)
+                {
+                    var data = interactable.GetInteractableInfo();
+                    rightClickUI.SetActive(true);
+                    if (rightClickTMP != null)
+                        rightClickTMP.text = $"{data.objectName}\n{data.description}";
+                }
+            }
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            // 우클릭 뗌: UI 비활성화
+            rightClickUI.SetActive(false);
+            if (rightClickTMP != null)
+                rightClickTMP.text = "";
+        }
     }
 
     public void OnTab(InputAction.CallbackContext context)

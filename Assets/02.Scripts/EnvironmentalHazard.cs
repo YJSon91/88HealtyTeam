@@ -35,6 +35,10 @@ public class EnvironmentalHazard : MonoBehaviour
         }
         else if (type == HazardType.POISON_GAS_AREA)
         {
+            if(poisoning != null)
+            {
+                StopCoroutine(poisoning);
+            }
             effectValue = 1.0f;
             poisoning = StartCoroutine(Poisoning((int)effectValue));
         }

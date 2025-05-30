@@ -306,4 +306,9 @@ public class GameManager : MonoBehaviour
     {
         // SaveCurrentGameData(); // 게임 종료 시 자동 저장 (선택적)
     }
+
+    public float GetCurrentTimer()
+    {
+        return currentTimer;
+    }
 }

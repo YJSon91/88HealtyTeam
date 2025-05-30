@@ -67,7 +67,7 @@ public class PlayerCondition : MonoBehaviour
             lowHpWarningCoroutine = StartCoroutine(PlayLowHpWarning());
             isLowHpWarningActive = true;
 
-            SoundManager.Instance.SetBGMVolume(0.3f);
+            SoundManager.Instance.SetBGMVolume(0.05f);
         }
 
         // 체력이 31 이상으로 회복되면 중단
@@ -78,7 +78,7 @@ public class PlayerCondition : MonoBehaviour
 
             isLowHpWarningActive = false;
 
-            SoundManager.Instance.SetBGMVolume(1f);
+            SoundManager.Instance.SetBGMVolume(0.05f);
         }
 
         StaminaAmountOfChange();

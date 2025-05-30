@@ -172,7 +172,7 @@ public class GameManager : MonoBehaviour
     }
 
     // --- 게임 상태 변경 함수 ---
-    private void GameClear()
+    public void GameClear()
     {
         isGameOver = true;
         Debug.Log("GameManager: 스테이지 클리어!");

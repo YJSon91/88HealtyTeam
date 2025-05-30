@@ -18,6 +18,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip damageSound;
     public AudioClip buttonPressSound;
     public AudioClip doorOpenSound;
+    public AudioClip doorCloseSound;
     public AudioClip footstepWalk;
     public AudioClip footstepRun;
     public AudioClip jumpSound;
@@ -98,6 +99,10 @@ public class SoundManager : MonoBehaviour
     public void PlayDoorOpenSound()
     {
         sfxSource.PlayOneShot(doorOpenSound);
+    }
+    public void PlayDoorCloseSound()
+    {
+        sfxSource.PlayOneShot(doorCloseSound);
     }
 
     public void PlayJumpSound()

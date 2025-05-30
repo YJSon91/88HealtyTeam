@@ -97,6 +97,15 @@ public class PlayerCondition : MonoBehaviour
         if (isDead) return;//이미 죽은 상태라면 함수 종료
         isDead = true;//죽은 상태로 변경
         // 플레이어가 죽었을 때 메서드 아직 구현 안됨
+        GameOverUI gameOverUI = FindObjectOfType<GameOverUI>();
+        if (gameOverUI != null)
+        {
+            gameOverUI.ShowGameOver("플레이어 사망");
+        }
+        else
+        {
+            Debug.LogWarning("GameOverUI를 찾을 수 없습니다.");
+        }
     }
 
     public void TakePhysicalDamage(int damage)

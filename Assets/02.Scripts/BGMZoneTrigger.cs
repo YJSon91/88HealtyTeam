@@ -14,16 +14,16 @@ public class BGMZoneTrigger : MonoBehaviour
             switch (bgmType)
             {
                 case BGMType.Lobby:
-                    SoundManager.Instance.PlayLobbyBGM();
+                    SoundManager.Instance?.PlayLobbyBGM();
                     break;
                 case BGMType.StageNormal:
-                    SoundManager.Instance.PlayStageBGM("Stage", false);
+                    SoundManager.Instance?.PlayStageBGM("Stage", false);
                     break;
                 case BGMType.StageEmergency:
-                    SoundManager.Instance.PlayStageBGM("Stage", true);
+                    SoundManager.Instance?.PlayStageBGM("Stage", true);
                     break;
                 case BGMType.StageSuccess:
-                    SoundManager.Instance.PlayStageSuccessBGM();
+                    SoundManager.Instance?.PlayStageSuccessBGM();
                     break;
             }
         }

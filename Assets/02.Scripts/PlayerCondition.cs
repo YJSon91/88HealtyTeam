@@ -18,7 +18,7 @@ public class PlayerCondition : MonoBehaviour
     public UICondition uiCondition;
 
     [SerializeField] private GameObject DieUI;
-    private bool isDead = GameManager.Instance.isGameOver;
+    private bool isDead = false;
 
     [Header("UI ¿¬µ¿")]
     public Condition healthBar;

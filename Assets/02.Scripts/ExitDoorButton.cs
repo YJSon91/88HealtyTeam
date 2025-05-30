@@ -22,6 +22,7 @@ public class ExitDoorButton : MonoBehaviour
             OXPanel.ShowPanelO();
             beaconActivate.ActivateBeacon();
             isExitDoorOpen = true;
+            GameManager.Instance.ReportFinalStageButtonPressed(true);
             return;
         }
         if (isExitDoorOpen)
@@ -29,6 +30,7 @@ public class ExitDoorButton : MonoBehaviour
             OXPanel.ShowPanelX();
             beaconActivate.DeactivateBeacon();
             isExitDoorOpen = false;
+            GameManager.Instance.ReportFinalStageButtonPressed(false);
             return;
         }
     }

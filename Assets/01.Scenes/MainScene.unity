@@ -1156,7 +1156,7 @@ GameObject:
   - component: {fileID: 101768280}
   - component: {fileID: 101768279}
   - component: {fileID: 101768278}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Lobby
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1205,12 +1205,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 101768277}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.8500001, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.566804, y: 73.650276, z: -217.18253}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1654569462}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &102102302 stripped
 Transform:
@@ -12425,7 +12425,7 @@ GameObject:
   - component: {fileID: 1111411755}
   - component: {fileID: 1111411754}
   - component: {fileID: 1111411753}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Stage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12474,12 +12474,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1111411752}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 32.9, y: 1.3, z: 76.77}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 35.466805, y: 72.10028, z: -140.41254}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1654569462}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1112331674
 PrefabInstance:
@@ -18038,6 +18038,40 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3452931867044665262, guid: 32467b8dc355cd04da356b17dbac4f29, type: 3}
   m_PrefabInstance: {fileID: 1652589823}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1654569461
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1654569462}
+  m_Layer: 8
+  m_Name: BGM
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1654569462
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654569461}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.566804, y: -70.80028, z: 217.18253}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 101768280}
+  - {fileID: 1111411755}
+  - {fileID: 1907593892}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1668015479
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20759,7 +20793,7 @@ GameObject:
   - component: {fileID: 1907593892}
   - component: {fileID: 1907593891}
   - component: {fileID: 1907593890}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: StageSuccess
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20808,12 +20842,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1907593889}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.8500001, z: 61.1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.566804, y: 73.650276, z: -156.08252}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1654569462}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1908557570
 PrefabInstance:
@@ -29163,11 +29197,9 @@ SceneRoots:
   - {fileID: 223674815}
   - {fileID: 182190708}
   - {fileID: 1355565635}
-  - {fileID: 101768280}
-  - {fileID: 1111411755}
-  - {fileID: 1907593892}
   - {fileID: 2105913487}
   - {fileID: 1390993658}
   - {fileID: 1695404325}
   - {fileID: 101334159}
   - {fileID: 942175311}
+  - {fileID: 1654569462}

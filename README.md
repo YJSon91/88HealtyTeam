@@ -31,8 +31,7 @@
 
 ## 🖼️ 인게임 스크린샷
 
-./Assets/ScreenShot/ScreenShot.png
-
+![게임 화면 예시](./Assets/ScreenShot/ScreenShot.png)
 
 ---
 

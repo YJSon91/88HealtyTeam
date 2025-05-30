@@ -18,7 +18,7 @@ public class PlayerCondition : MonoBehaviour
     public UICondition uiCondition;
 
     [SerializeField] private GameObject DieUI;
-    private bool isDead = false;
+    private bool isDead = GameManager.Instance.isGameOver;
 
     [Header("UI 연동")]
     public Condition healthBar;
@@ -52,7 +52,7 @@ public class PlayerCondition : MonoBehaviour
     {
         if (!isDead && health <= 0)
         {
-            Die();
+            Die("Hp가 0이 되었습니다!");
         }
 
         if (healthBar != null)
@@ -92,11 +92,12 @@ public class PlayerCondition : MonoBehaviour
             yield return new WaitForSeconds(1.5f); // 1.5초 간격 (원하면 더 짧게/길게 조절 가능)
         }
     }
-    void Die()
+    void Die(string dieReason)
     {
         if (isDead) return;//이미 죽은 상태라면 함수 종료
         isDead = true;//죽은 상태로 변경
         // 플레이어가 죽었을 때 메서드 아직 구현 안됨
+        GameManager.Instance.GameOver(dieReason);
         GameOverUI gameOverUI = FindObjectOfType<GameOverUI>();
         if (gameOverUI != null)
         {

@@ -17,14 +17,18 @@ public class DamageEffect : MonoBehaviour
 
     public void Flash()
     {
-        if (coroutine != null)
+        bool isGameOver = GameManager.Instance.isGameOver;
+        if (!isGameOver)
         {
-            StopCoroutine(coroutine);
-        }
+            if (coroutine != null)
+            {
+                StopCoroutine(coroutine);
+            }
 
-        image.enabled = true;
-        image.color = new Color(1f, 150f / 255f, 150f / 255f);
-        coroutine = StartCoroutine(FadeAway());
+            image.enabled = true;
+            image.color = new Color(1f, 150f / 255f, 150f / 255f);
+            coroutine = StartCoroutine(FadeAway());
+        }
     }
 
     private IEnumerator FadeAway()

@@ -10407,7 +10407,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 967234597}
-  - component: {fileID: 967234598}
   m_Layer: 0
   m_Name: Escape
   m_TagString: Untagged
@@ -10432,18 +10431,6 @@ Transform:
   - {fileID: 1602653079}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &967234598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 967234596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 205feaa31e192c04d98f9a1f571adf33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &967255864 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1453485022173259434, guid: eb4b38db67a56dc469a2c2aafcc36add, type: 3}
@@ -14511,6 +14498,7 @@ GameObject:
   - component: {fileID: 1342005658}
   - component: {fileID: 1342005657}
   - component: {fileID: 1342005656}
+  - component: {fileID: 1342005660}
   m_Layer: 0
   m_Name: Escape Collider
   m_TagString: Untagged
@@ -14559,7 +14547,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: fb4d3467b4ae5e24cbf5169693b49d33, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14604,6 +14592,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 967234597}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1342005660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342005655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc5285b79d6f56e45ae325ee0539a574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1347676850
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17488,7 +17488,7 @@ Transform:
   m_GameObject: {fileID: 1602653078}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -3}
+  m_LocalPosition: {x: 0, y: 0, z: -3.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17506,7 +17506,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 50
+  m_Intensity: 100
   m_Range: 11.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -18276,14 +18276,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1236937373356000575, guid: 031a0bd4108a0374d8f2d4447164d7fb, type: 3}
-      propertyPath: healthBar
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1236937373356000575, guid: 031a0bd4108a0374d8f2d4447164d7fb, type: 3}
-      propertyPath: staminaBar
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 6128261400810528951, guid: 031a0bd4108a0374d8f2d4447164d7fb, type: 3}
       propertyPath: m_Name
       value: Player

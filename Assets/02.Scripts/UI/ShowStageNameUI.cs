@@ -18,11 +18,11 @@ public class ShowStageNameUI : MonoBehaviour
 
     public Coroutine coroutine;
 
-        
+    bool hasShown = false;
 
     void ShowName()
     {
-        if (stageNum == StageNum.STAGE_ONE && stage1 != null)
+        if (stageNum == StageNum.STAGE_ONE && stage1 != null && !hasShown)
         {
             coroutine = StartCoroutine(ShowTime());
         }
@@ -35,7 +35,7 @@ public class ShowStageNameUI : MonoBehaviour
         stage1.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(2);
-
+        hasShown = true;
         stage1.gameObject.SetActive(false);
     }
 

@@ -12832,6 +12832,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5723322156625805981, guid: 6aad41a1cb8662445859cf5ee99bcb84, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 5723322156625805981, guid: 6aad41a1cb8662445859cf5ee99bcb84, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6630144567875046801, guid: 6aad41a1cb8662445859cf5ee99bcb84, type: 3}
       propertyPath: m_Name
       value: CanvasDescriptionUI

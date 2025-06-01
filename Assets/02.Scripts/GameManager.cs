@@ -246,7 +246,7 @@ public class GameManager : MonoBehaviour
         GameSaveManager.Instance.SaveGame(dataToSave);
     }
 
-    public void LoadAndApplyGameData()
+    public void LoadAndApplyGameData() // 또는 LoadAndApplyPlayerData()
     {
         if (GameSaveManager.Instance == null)
         {
@@ -254,44 +254,57 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        GameData loadedData = GameSaveManager.Instance.LoadGame();
+        GameData loadedData = GameSaveManager.Instance.LoadGame(); // 또는 LoadPlayerData()
 
-        // 플레이어 정보 복원
-        if (CharacterManager.Instance != null && CharacterManager.Instance.Player != null)
+        // CharacterManager 및 Player 객체 존재 여부부터 확인
+        if (CharacterManager.Instance == null)
         {
-            Player player = CharacterManager.Instance.Player;
-            CharacterController cc = player.GetComponent<CharacterController>();
+            Debug.LogWarning("CharacterManager.Instance is null. Cannot apply loaded player state at this time.");
+            return;
+        }
+        if (CharacterManager.Instance.Player == null)
+        {
+            Debug.LogWarning("CharacterManager.Instance.Player is null. Cannot apply loaded player state at this time. Player object might not be initialized yet.");
+            return;
+        }
 
-            if (cc != null && cc.enabled) cc.enabled = false;
-            player.transform.position = loadedData.playerPosition;
+        Player player = CharacterManager.Instance.Player;
+
+        // 플레이어 위치/회전 적용 (CharacterController 사용 시 주의)
+        CharacterController cc = player.GetComponent<CharacterController>();
+        if (cc != null && cc.enabled)
+        {
+            cc.enabled = false;
+            player.transform.position = loadedData.playerPosition; // loadedData는 null이 아님 (new GameData() 반환)
             player.transform.rotation = loadedData.playerRotation;
-            if (cc != null) cc.enabled = true;
-
-            if (player.condition != null)
-            {
-                player.condition.health = loadedData.playerHealth;
-                player.condition.Stamina = loadedData.playerStamina;
-                // TODO: UI에도 반영 필요 (UIManager 호출)
-            }
+            cc.enabled = true;
         }
         else
         {
-            Debug.LogWarning("CharacterManager or Player not found. Cannot apply loaded player state.");
-            return; // 플레이어가 없으면 아래 상태 복원 의미 없음
+            player.transform.position = loadedData.playerPosition;
+            player.transform.rotation = loadedData.playerRotation;
         }
 
+        // PlayerCondition 컴포넌트 존재 여부 확인
+        if (player.condition != null)
+        {
+            player.condition.health = loadedData.playerHealth;
+            player.condition.Stamina = loadedData.playerStamina;
+            // TODO: UI에도 반영 필요 (UIManager 호출)
+            // 예: if (UIManager.Instance != null) UIManager.Instance.UpdatePlayerStatsUI(player.condition.health, player.condition.Stamina);
+            Debug.Log("GameManager: Loaded player condition applied.");
+        }
+        else
+        {
+            Debug.LogWarning("Player.condition is null on Player object. Cannot apply health/stamina from save data.");
+        }
 
-        // --- 향후 확장: 현재는 주석 처리된 게임 진행 상태 복원 ---
-        // this.isGasRoomPuzzle1Solved = loadedData.gasRoomPuzzle1Solved;
-        // this.isBeaconActivated = loadedData.beaconActivated;
-        // this.isFinalButtonPressed = loadedData.finalButtonPressed;
-        // this.currentTimer = loadedData.currentTimer;
-        // if (PuzzleManager.Instance != null && loadedData.lightsOutPuzzleCleared) { /* PuzzleManager 상태 복원 */ }
-        // ApplyItemStates(loadedData.itemStates); // 아이템 상태 복원 함수 별도 구현 필요 (복잡)
-
-        // ApplyVisualStatesFromLoadedData(); // 문 상태 등 시각적 업데이트 (이것도 퍼즐 상태 저장 시 함께)
         Debug.Log("GameManager: Loaded game data (player focus) and applied to player.");
-        // UpdateLobbyButtonIndicatorVisuals(); // 로드 후 시각적 피드백 요소도 업데이트
+
+        // --- 향후 확장: 게임 진행 상태 복원 ---
+        // this.isGasRoomPuzzle1Solved = loadedData.gasRoomPuzzle1Solved;
+        // ... (이하 생략) ...
+        // ApplyVisualStatesFromLoadedData();
     }
 
     /* // 문 상태 등 시각적 업데이트 함수 (나중에 퍼즐/진행 상태 저장 시 활성화)

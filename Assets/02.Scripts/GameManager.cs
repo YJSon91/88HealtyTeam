@@ -25,7 +25,21 @@ public class GameManager : MonoBehaviour
     public float stageTimeLimit = 180f; // 예: 3분 (Inspector에서 조절 가능)
     private float currentTimer;
     public bool isGameOver = false;
-    private bool isGamePaused = false; // (선택적) 일시정지 기능용
+    private bool _isGamePaused = false; // private 필드
+    public bool IsGamePaused // public 프로퍼티
+    {
+        get { return _isGamePaused; }
+        set
+        {
+            _isGamePaused = value;
+            Debug.Log("GameManager: IsGamePaused (property) set to " + _isGamePaused);
+            // 만약 GameManager가 직접 Time.timeScale을 제어하고 싶다면 여기에 로직 추가 가능
+            // 예: Time.timeScale = _isGamePaused ? 0f : 1f;
+            //     if(_isGamePaused) Cursor.lockState = CursorLockMode.None; else Cursor.lockState = CursorLockMode.Locked;
+            //     Cursor.visible = _isGamePaused;
+            // 하지만 현재 PauseUI에서 Time.timeScale과 Cursor를 제어하므로, 여기서는 상태 변경만 담당
+        }
+    }
 
     void Awake()
     {
@@ -40,13 +54,13 @@ public class GameManager : MonoBehaviour
             return; // 중복 인스턴스 시 추가 초기화 방지
         }
 
-        // InitializeStage(); // Start()에서 호출하여 다른 Awake()들이 먼저 실행될 여지를 줌
+        
     }
 
     void Start()
     {
         InitializeStage();       // 먼저 기본값으로 스테이지 초기화
-        LoadAndApplyGameData();  // 그 다음 저장된 플레이어 데이터 불러와서 덮어쓰기
+        
     }
 
     void InitializeStage()
@@ -65,15 +79,14 @@ public class GameManager : MonoBehaviour
         // 타이머 초기화 및 시작
         currentTimer = stageTimeLimit;
         isGameOver = false;
-        isGamePaused = false; // 일시정지 상태 초기화
+        IsGamePaused = false; // 프로퍼티를 통해 _isGamePaused 설정
         Debug.Log("GameManager: 스테이지 초기화 완료. 타이머 시작!");
-
-      
+              
     }
 
     void Update()
     {
-        if (isGameOver || isGamePaused) // 게임오버 또는 일시정지 시 업데이트 중단
+        if (isGameOver || _isGamePaused) // 게임오버 또는 일시정지 시 업데이트 중단
             return;
 
         // 타이머 업데이트

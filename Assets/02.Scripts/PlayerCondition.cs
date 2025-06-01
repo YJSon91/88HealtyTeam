@@ -52,7 +52,7 @@ public class PlayerCondition : MonoBehaviour
     {
         if (!isDead && health <= 0)
         {
-            Die();
+            Die("Hp가 0이 되었습니다!");
         }
 
         if (healthBar != null)
@@ -67,7 +67,7 @@ public class PlayerCondition : MonoBehaviour
             lowHpWarningCoroutine = StartCoroutine(PlayLowHpWarning());
             isLowHpWarningActive = true;
 
-            SoundManager.Instance.SetBGMVolume(0.3f);
+            SoundManager.Instance?.SetBGMVolume(0.05f);
         }
 
         // 체력이 31 이상으로 회복되면 중단
@@ -78,7 +78,7 @@ public class PlayerCondition : MonoBehaviour
 
             isLowHpWarningActive = false;
 
-            SoundManager.Instance.SetBGMVolume(1f);
+            SoundManager.Instance.SetBGMVolume(0.05f);
         }
 
         StaminaAmountOfChange();
@@ -92,11 +92,21 @@ public class PlayerCondition : MonoBehaviour
             yield return new WaitForSeconds(1.5f); // 1.5초 간격 (원하면 더 짧게/길게 조절 가능)
         }
     }
-    void Die()
+    void Die(string dieReason)
     {
         if (isDead) return;//이미 죽은 상태라면 함수 종료
         isDead = true;//죽은 상태로 변경
         // 플레이어가 죽었을 때 메서드 아직 구현 안됨
+        GameManager.Instance.GameOver(dieReason);
+        GameOverUI gameOverUI = FindObjectOfType<GameOverUI>();
+        if (gameOverUI != null)
+        {
+            gameOverUI.ShowGameOver("플레이어 사망");
+        }
+        else
+        {
+            Debug.LogWarning("GameOverUI를 찾을 수 없습니다.");
+        }
     }
 
     public void TakePhysicalDamage(int damage)

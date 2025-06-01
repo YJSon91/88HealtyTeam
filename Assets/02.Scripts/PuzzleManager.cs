@@ -94,7 +94,7 @@ public class PuzzleManager : MonoBehaviour
             puzzles[i, j].isLightON = !puzzles[i, j].isLightON;
         }
 
-        SoundManager.Instance.PlaySFX("buttonPressSound");
+        SoundManager.Instance?.PlaySFX("buttonPressSound");
     }
 
 
@@ -135,7 +135,7 @@ public class PuzzleManager : MonoBehaviour
         SceneManager.UnloadSceneAsync("PuzzleScene");
         Debug.Log("퍼즐 클리어! 문이 열립니다.");
 
-        SoundManager.Instance.PlaySFX("doorOpenSound");
+        SoundManager.Instance?.PlaySFX("doorOpenSound");
     }
 
     public void GoBack()

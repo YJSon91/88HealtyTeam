@@ -32,7 +32,7 @@ public class Beacon : MonoBehaviour, IInteractable
             if (ReceiveItem(item))
             {
                 item.OnPlace(); // 아이템이 비콘에 배치되었을 때, 아이템 작동 메소드 호출
-
+                GameManager.Instance.ReportBeaconActivated(true);
                 ActivateGimmick();
             }
             else
@@ -49,7 +49,7 @@ public class Beacon : MonoBehaviour, IInteractable
         if (item != null)
         {
             isActivated = false; // 비활성화 상태로 변경
-
+            GameManager.Instance.ReportBeaconActivated(false);
             ActivateGimmick();
         }
     }
@@ -82,11 +82,12 @@ public class Beacon : MonoBehaviour, IInteractable
         if (isActivated && beaconActivate != null)
         {
             beaconActivate.ActivateBeacon();
-            GameManager.Instance.ReportBeaconActivated();
+            GameManager.Instance.ReportBeaconActivated(true);
         }
         else
         {
             beaconActivate.DeactivateBeacon();
+            GameManager.Instance.ReportBeaconActivated(false);
         }
     }
 

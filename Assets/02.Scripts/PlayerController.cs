@@ -58,6 +58,8 @@ public class PlayerController : MonoBehaviour
     private bool footstepCooldown = false;
     private Coroutine footstepCoroutine;
 
+    public Canvas Pause;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -101,7 +103,7 @@ public class PlayerController : MonoBehaviour
         while (true)
         {
             bool isRunning = isDashing;
-            SoundManager.Instance.PlayPlayerFootstep(isRunning);
+            SoundManager.Instance?.PlayPlayerFootstep(isRunning);
 
             yield return new WaitForSeconds(isRunning ? 0.3f : 0.5f);
         }
@@ -207,7 +209,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        SoundManager.Instance.PlaySFX("jumpSound");
+        SoundManager.Instance?.PlaySFX("jumpSound");
     }
     public void OnLeftClick(InputAction.CallbackContext context)
     {
@@ -333,6 +335,9 @@ public class PlayerController : MonoBehaviour
         if (context.performed)
         {
             isPaused = !isPaused;
+            Cursor.visible = isPaused ? true : false;
+            Cursor.lockState = isPaused ? CursorLockMode.None : CursorLockMode.Locked;
+            Pause.gameObject.SetActive(isPaused);
             Time.timeScale = isPaused ? 0f : 1f;
             if (tabMenuUI != null)
                 tabMenuUI.SetActive(isPaused);

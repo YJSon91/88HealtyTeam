@@ -54,7 +54,6 @@ https://assetstore.unity.com/packages/3d/environments/sci-fi/sci-fi-construction
 
 | 이름       | 역할         |  작업내용 |
 |------------|--------------|--------------|
-
 | 이민호 | 팀장 | 퍼즐 씬 제작 |
 | 손영준 | 팀원 | GameManager, 전체적인 작업물 조율, 세이브 기능, Github 관리 |
 | 변세진 | 팀원 | 아이템 기믹, 튜토리얼, UI작업 보조 |

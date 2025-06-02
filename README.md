@@ -1,3 +1,10 @@
+## 📦 사용한 외부 에셋
+
+모든 외부 에셋은 `Assets/ExternalAssets` 폴더 내에서 관리되고 있습니다. 해당 폴더에 아래의 에셋을 임포트하여 실행해주세요.
+
+https://assetstore.unity.com/packages/3d/environments/sci-fi/sci-fi-construction-kit-modular-159280
+
+---
 # 🧪 Escape from the Laboratory
 
 > Unity 기반 3D 퍼즐 플랫포머 팀 프로젝트  
@@ -54,14 +61,6 @@
 | 이정호 | 팀원 | 맵 제작 |
 | 김희주 | 팀원 | 사운드 및 UI 관리 |
 | 서정원 | 팀원 | 플레이어 이동 및 상호작용 구현 |
-
----
-
-## 📦 사용한 외부 에셋
-
-모든 외부 에셋은 `Assets/ExternalAssets` 폴더 내에서 관리되고 있습니다. 해당 폴더에 아래의 에셋을 임포트하여 실행해주세요.
-
-https://assetstore.unity.com/packages/3d/environments/sci-fi/sci-fi-construction-kit-modular-159280
 
 ---
 

@@ -57,7 +57,7 @@ https://assetstore.unity.com/packages/3d/environments/sci-fi/sci-fi-construction
 
 | 이민호 | 팀장 | 퍼즐 씬 제작 |
 | 손영준 | 팀원 | GameManager, 전체적인 작업물 조율, 세이브 기능, Github 관리 |
-| 변세준 | 팀원 | ScriptableObject 데이터, UI작업 보조 |
+| 변세진 | 팀원 | 아이템 기믹, 튜토리얼, UI작업 보조 |
 | 이정호 | 팀원 | 맵 제작 |
 | 김희주 | 팀원 | 사운드 및 UI 관리 |
 | 서정원 | 팀원 | 플레이어 이동 및 상호작용 구현 |

@@ -19,13 +19,27 @@ public class GameManager : MonoBehaviour
 
     // --- 스테이지 클리어 시각적 피드백 관련 (예: 이전 LobbyButton) ---
     public bool isStage1EffectivelyCleared = false; // 스테이지의 실질적 클리어(최종 버튼 눌림)를 나타냄
-    public LobbyButton stage1LobbyButtonIndicator;   // 관련 UI 요소 참조 (필요 없다면 null로 두거나 제거)
+    
 
     // --- 스테이지 타이머 및 게임 오버 관련 변수 ---
     public float stageTimeLimit = 180f; // 예: 3분 (Inspector에서 조절 가능)
     private float currentTimer;
     public bool isGameOver = false;
-    private bool isGamePaused = false; // (선택적) 일시정지 기능용
+    private bool _isGamePaused = false; // private 필드
+    public bool IsGamePaused // public 프로퍼티
+    {
+        get { return _isGamePaused; }
+        set
+        {
+            _isGamePaused = value;
+            Debug.Log("GameManager: IsGamePaused (property) set to " + _isGamePaused);
+            // 만약 GameManager가 직접 Time.timeScale을 제어하고 싶다면 여기에 로직 추가 가능
+            // 예: Time.timeScale = _isGamePaused ? 0f : 1f;
+            //     if(_isGamePaused) Cursor.lockState = CursorLockMode.None; else Cursor.lockState = CursorLockMode.Locked;
+            //     Cursor.visible = _isGamePaused;
+            // 하지만 현재 PauseUI에서 Time.timeScale과 Cursor를 제어하므로, 여기서는 상태 변경만 담당
+        }
+    }
 
     void Awake()
     {
@@ -40,13 +54,13 @@ public class GameManager : MonoBehaviour
             return; // 중복 인스턴스 시 추가 초기화 방지
         }
 
-        // InitializeStage(); // Start()에서 호출하여 다른 Awake()들이 먼저 실행될 여지를 줌
+        
     }
 
     void Start()
     {
         InitializeStage();       // 먼저 기본값으로 스테이지 초기화
-        LoadAndApplyGameData();  // 그 다음 저장된 플레이어 데이터 불러와서 덮어쓰기
+        
     }
 
     void InitializeStage()
@@ -65,15 +79,14 @@ public class GameManager : MonoBehaviour
         // 타이머 초기화 및 시작
         currentTimer = stageTimeLimit;
         isGameOver = false;
-        isGamePaused = false; // 일시정지 상태 초기화
+        IsGamePaused = false; // 프로퍼티를 통해 _isGamePaused 설정
         Debug.Log("GameManager: 스테이지 초기화 완료. 타이머 시작!");
-
-        UpdateLobbyButtonIndicatorVisuals(); // 시각적 피드백 요소 초기화
+              
     }
 
     void Update()
     {
-        if (isGameOver || isGamePaused) // 게임오버 또는 일시정지 시 업데이트 중단
+        if (isGameOver || _isGamePaused) // 게임오버 또는 일시정지 시 업데이트 중단
             return;
 
         // 타이머 업데이트
@@ -189,7 +202,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("GameManager: 스테이지 클리어!");
         // TODO: UI 시스템 담당에게 클리어 UI 표시 요청
         // if (UIManager.Instance != null) UIManager.Instance.ShowStageClearUI();
-        UpdateLobbyButtonIndicatorVisuals();
+        
         SaveCurrentGameData(); // 게임 클리어 시 최종 상태 저장
     }
 
@@ -207,16 +220,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // --- (선택적) 로비 버튼 인디케이터 시각적 업데이트 ---
-    private void UpdateLobbyButtonIndicatorVisuals()
-    {
-        if (stage1LobbyButtonIndicator != null)
-        {
-            // LobbyButton 스크립트가 isStage1EffectivelyCleared 값을 직접 참조하여 자신의 상태를 업데이트한다고 가정
-            // 또는 여기서 stage1LobbyButtonIndicator.UpdateVisuals(isStage1EffectivelyCleared); 같은 함수 호출
-            Debug.Log("GameManager: 로비 버튼 인디케이터 시각적 업데이트 필요 (isStage1EffectivelyCleared: " + isStage1EffectivelyCleared + ")");
-        }
-    }
+      
 
     // --- 세이브/로드 관련 함수 (현재 플레이어 정보 위주) ---
     public void SaveCurrentGameData()
@@ -255,7 +259,7 @@ public class GameManager : MonoBehaviour
         GameSaveManager.Instance.SaveGame(dataToSave);
     }
 
-    public void LoadAndApplyGameData()
+    public void LoadAndApplyGameData() // 또는 LoadAndApplyPlayerData()
     {
         if (GameSaveManager.Instance == null)
         {
@@ -263,44 +267,57 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        GameData loadedData = GameSaveManager.Instance.LoadGame();
+        GameData loadedData = GameSaveManager.Instance.LoadGame(); // 또는 LoadPlayerData()
 
-        // 플레이어 정보 복원
-        if (CharacterManager.Instance != null && CharacterManager.Instance.Player != null)
+        // CharacterManager 및 Player 객체 존재 여부부터 확인
+        if (CharacterManager.Instance == null)
         {
-            Player player = CharacterManager.Instance.Player;
-            CharacterController cc = player.GetComponent<CharacterController>();
+            Debug.LogWarning("CharacterManager.Instance is null. Cannot apply loaded player state at this time.");
+            return;
+        }
+        if (CharacterManager.Instance.Player == null)
+        {
+            Debug.LogWarning("CharacterManager.Instance.Player is null. Cannot apply loaded player state at this time. Player object might not be initialized yet.");
+            return;
+        }
 
-            if (cc != null && cc.enabled) cc.enabled = false;
-            player.transform.position = loadedData.playerPosition;
+        Player player = CharacterManager.Instance.Player;
+
+        // 플레이어 위치/회전 적용 (CharacterController 사용 시 주의)
+        CharacterController cc = player.GetComponent<CharacterController>();
+        if (cc != null && cc.enabled)
+        {
+            cc.enabled = false;
+            player.transform.position = loadedData.playerPosition; // loadedData는 null이 아님 (new GameData() 반환)
             player.transform.rotation = loadedData.playerRotation;
-            if (cc != null) cc.enabled = true;
-
-            if (player.condition != null)
-            {
-                player.condition.health = loadedData.playerHealth;
-                player.condition.Stamina = loadedData.playerStamina;
-                // TODO: UI에도 반영 필요 (UIManager 호출)
-            }
+            cc.enabled = true;
         }
         else
         {
-            Debug.LogWarning("CharacterManager or Player not found. Cannot apply loaded player state.");
-            return; // 플레이어가 없으면 아래 상태 복원 의미 없음
+            player.transform.position = loadedData.playerPosition;
+            player.transform.rotation = loadedData.playerRotation;
         }
 
+        // PlayerCondition 컴포넌트 존재 여부 확인
+        if (player.condition != null)
+        {
+            player.condition.health = loadedData.playerHealth;
+            player.condition.Stamina = loadedData.playerStamina;
+            // TODO: UI에도 반영 필요 (UIManager 호출)
+            // 예: if (UIManager.Instance != null) UIManager.Instance.UpdatePlayerStatsUI(player.condition.health, player.condition.Stamina);
+            Debug.Log("GameManager: Loaded player condition applied.");
+        }
+        else
+        {
+            Debug.LogWarning("Player.condition is null on Player object. Cannot apply health/stamina from save data.");
+        }
 
-        // --- 향후 확장: 현재는 주석 처리된 게임 진행 상태 복원 ---
-        // this.isGasRoomPuzzle1Solved = loadedData.gasRoomPuzzle1Solved;
-        // this.isBeaconActivated = loadedData.beaconActivated;
-        // this.isFinalButtonPressed = loadedData.finalButtonPressed;
-        // this.currentTimer = loadedData.currentTimer;
-        // if (PuzzleManager.Instance != null && loadedData.lightsOutPuzzleCleared) { /* PuzzleManager 상태 복원 */ }
-        // ApplyItemStates(loadedData.itemStates); // 아이템 상태 복원 함수 별도 구현 필요 (복잡)
-
-        // ApplyVisualStatesFromLoadedData(); // 문 상태 등 시각적 업데이트 (이것도 퍼즐 상태 저장 시 함께)
         Debug.Log("GameManager: Loaded game data (player focus) and applied to player.");
-        // UpdateLobbyButtonIndicatorVisuals(); // 로드 후 시각적 피드백 요소도 업데이트
+
+        // --- 향후 확장: 게임 진행 상태 복원 ---
+        // this.isGasRoomPuzzle1Solved = loadedData.gasRoomPuzzle1Solved;
+        // ... (이하 생략) ...
+        // ApplyVisualStatesFromLoadedData();
     }
 
     /* // 문 상태 등 시각적 업데이트 함수 (나중에 퍼즐/진행 상태 저장 시 활성화)

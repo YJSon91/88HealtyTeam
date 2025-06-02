@@ -58,6 +58,8 @@ public class PlayerController : MonoBehaviour
     private bool footstepCooldown = false;
     private Coroutine footstepCoroutine;
 
+    public Canvas Pause;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -315,7 +317,7 @@ public class PlayerController : MonoBehaviour
                     var data = interactable.GetInteractableInfo();
                     rightClickUI.SetActive(true);
                     if (rightClickTMP != null)
-                        rightClickTMP.text = $"{data.objectName}\n{data.description}";
+                        rightClickTMP.text = $"{data.objectName}\n\n{data.description}";
                 }
             }
         }
@@ -333,6 +335,9 @@ public class PlayerController : MonoBehaviour
         if (context.performed)
         {
             isPaused = !isPaused;
+            Cursor.visible = isPaused ? true : false;
+            Cursor.lockState = isPaused ? CursorLockMode.None : CursorLockMode.Locked;
+            Pause.gameObject.SetActive(isPaused);
             Time.timeScale = isPaused ? 0f : 1f;
             if (tabMenuUI != null)
                 tabMenuUI.SetActive(isPaused);

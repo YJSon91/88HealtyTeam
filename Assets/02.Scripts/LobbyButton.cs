@@ -91,8 +91,7 @@ public class LobbyButton : MonoBehaviour
                     buttonRenderer.material = clearedMaterial;
                     Debug.Log(gameObject.name + " - 'CLEARED' 상태로 머티리얼 변경 시도!");
                 }
-            }
-            else
+            }            else
             {
                 // Debug.LogWarning(gameObject.name + " - clearedMaterial이 Inspector에 할당되지 않았습니다.");
             }

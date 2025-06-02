@@ -317,7 +317,7 @@ public class PlayerController : MonoBehaviour
                     var data = interactable.GetInteractableInfo();
                     rightClickUI.SetActive(true);
                     if (rightClickTMP != null)
-                        rightClickTMP.text = $"{data.objectName}\n{data.description}";
+                        rightClickTMP.text = $"{data.objectName}\n\n{data.description}";
                 }
             }
         }

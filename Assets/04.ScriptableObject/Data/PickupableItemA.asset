@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PickupableItemA
   m_EditorClassIdentifier: 
   objectID: 59b96f2c-d1c7-40ca-80f1-bb7194a857fb
-  objectName: PickupableItemA
+  objectName: "A\uD0C0\uC785 \uC5F4\uC1E0"
   objectColor: 0
-  description: "A\uD0C0\uC785 \uC5F4\uC1E0: \uAC19\uC740 \uC0C9\uC758 \uBE44\uCF58\uC5D0
-    \uC62C\uB824\uB450\uBA74 \uBB38\uC774 \uC5F4\uB9BD\uB2C8\uB2E4"
+  description: "\uAC19\uC740 \uC0C9\uC758 \uBE44\uCF58\uC5D0 \uC62C\uB824\uB450\uBA74
+    \uBB38\uC774 \uC5F4\uB9BD\uB2C8\uB2E4"

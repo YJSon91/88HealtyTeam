@@ -65,7 +65,7 @@ https://assetstore.unity.com/packages/3d/environments/sci-fi/sci-fi-construction
 
 ## 🎥 시연 영상
 
-[👉 Escape from the Laboratory 플레이 영상 보기](https://github.com/YJSon91/88HealtyTeam.git)
+[👉 Escape from the Laboratory 플레이 영상 보기](https://youtu.be/C3SfQNs6IMU)
 
 ---
 
